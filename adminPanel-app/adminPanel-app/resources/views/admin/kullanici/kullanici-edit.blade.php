@@ -24,23 +24,23 @@
         </div>
     @endif
     <div class="form-container">
-        <form action="{{ route('users.update', $user->id) }}" method="POST">
+        <form action="{{ route('edit.register', $user->id   ) }}" method="POST">
             @csrf
             @method('PUT')
 
             <label >Kullanıcı Adı :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" name="username" id="username" value="{{ $user->username }}" class="form-control" required>
+                <input type="text" name="username" id="username" value="{{ $user->username }}" class="form-control">
             </div>
 
             <label>Kullanıcı Title :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" name="userTitle" id="userTitle" value="{{ $user->userTitle }}" class="form-control" required>
+                <input type="text" name="userTitle" id="userTitle" value="{{ $user->userTitle }}" class="form-control">
             </div>
 
             <label>Şifre:</label>
             <div class="input-group mb-3 mt-2">
-                <input type="password" name="password" id="password" class="form-control">
+                <input type="text" name="password" id="password" class="form-control">
             </div>
 
             <button type="submit" class="btn btn-custom mt-3">Güncelle</button>

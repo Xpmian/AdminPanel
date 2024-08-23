@@ -21,15 +21,15 @@
         </div>
     @endif
     <div class="form-container">
-        <form action="{{ route('categories.create') }}" method="POST">
+        <form action="{{ route('register.kategori_ekleme_formu') }}" method="POST">
             @csrf
             <label>Kategori Adı :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" class="form-control" placeholder="Kategori Adı " name="categoryname" required>
+                <input type="text" class="form-control" placeholder="Kategori Adı " name="kategoriAdı" required>
             </div>
             <label>Kategori Açıklaması :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" class="form-control" placeholder="Kategori Açıklaması" name="categorydescription" required>
+                <input type="text" class="form-control" placeholder="Kategori Açıklaması" name="kategoriAciklamasi" required>
             </div>
             <label>Kategori Durumu :</label>
             <div class="input-group mb-3 mt-2">

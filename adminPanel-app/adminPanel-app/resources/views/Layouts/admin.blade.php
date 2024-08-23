@@ -26,7 +26,7 @@
         <div class="col-2">
                 <div class="profile-panel">
                     <div class="list-group " style="display: flex; justify-content: center; align-items: center;">
-                        <a href="{{ route('users.edit.form', session('slug')) }}">
+                        <a href="{{ route('show.edit', session('slug')) }}">
                             <img src="{{ asset('img/account.png') }}" id="profileImage" alt="Logo" style="width:70%; margin-left:30px;">
                         </a>
                         @if(session('userTitle'))
@@ -40,13 +40,13 @@
                                     <button class="dropbtn" style="border: none;">
                                         <i class="fa-solid fa-user me-1 "></i>Admin Kullanıcı Yönetimi
                                         <div class="dropdown-content">
-                                            <a style="text-decoration:none;color:black" href="{{route('users.list')}}">
+                                            <a style="text-decoration:none;color:black" href="{{route('kullanici_list')}}">
                                                 Kullanıcı Listeleme Sayfası
                                             </a>
-                                            <a style="text-decoration:none;color:black" href="{{route('users.create.form')}}">
+                                            <a style="text-decoration:none;color:black" href="{{route('show')}}">
                                                 Kullanıcı Ekleme Formu
                                             </a>
-                                            <a style="text-decoration:none;color:black" href="{{route('users.delete.list')}}">
+                                            <a style="text-decoration:none;color:black" href="{{route('kullanici_sil_list')}}">
                                                 Kullanıcı Silme Formu
                                             </a>
                                         </div>
@@ -58,13 +58,13 @@
                                     <button class="dropbtn" style="border: none;">
                                         <i class="fa-solid fa-list me-1"></i>Kategori Yönetimi
                                         <div class="dropdown-content">
-                                            <a style="text-decoration:none;color:black" href="{{route('categories.list')}}">
+                                            <a style="text-decoration:none;color:black" href="{{route('show.kategori_list_show')}}">
                                                 Kategori listeme formu
                                             </a>
-                                            <a style="text-decoration:none;color:black" href="{{route('categories.create.form')}}">
+                                            <a style="text-decoration:none;color:black" href="{{route('show.kategori_ekleme_formu')}}">
                                                 Kategori ekleme formu
                                             </a>
-                                            <a style="text-decoration:none;color:black" href="{{route('categories.delete.list')}}">
+                                            <a style="text-decoration:none;color:black" href="{{route('kategori_delete_list_show')}}">
                                                 Kategori silme
                                             </a>
                                         </div>
@@ -89,12 +89,9 @@
 
                                 </li>
                             </ul>
-                            <form action="{{ route('login.off') }}" method="POST">
-                                @csrf
-                                <button type="submit" id="btnLogoff" style="color: white; float: right; width: 60%; padding: 5px; display: block; margin: 0 auto; background-color: #284b63; border: none; border-radius: 5px; position: absolute; bottom: 3%; text-decoration: none; align-self: center;   ">
-                                    <i class="fa-solid fa-arrow-right-from-bracket me-3"></i>Çıkış Yap
-                                </button>
-                            </form>
+                        <a id="btnLogoff" href="{{route('login.form')}}" style="color: white;float: right;width: 60%;padding: 5px;display:block;margin: 0 auto;background-color: #284b63;border: none;border-radius: 5px;position: absolute;bottom: 3%;text-decoration:none;align-self:center">
+                            <i class="fa-solid fa-arrow-right-from-bracket me-3"></i>Çıkış Yap
+                        </a>
                     </div>
                 </div>
 

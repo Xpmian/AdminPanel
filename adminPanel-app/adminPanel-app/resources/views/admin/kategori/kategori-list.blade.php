@@ -39,18 +39,8 @@
                                 @elseif ($category->status == 0)
                                 <td style="color: red; font-weight: bold;">Pasif</td>
                                 @endif
-                                <td><a href="{{ route('categories.edit.form', $category->slug) }}" class="btn btn-warning btn-sm btn-custom">Düzenle</a>
-                                <td>
-                                    <button type="button" class="btn btn-danger btn-sm btn-custom" onclick="openModal({{ $category->id }})">Sil</button>
-                                    <div id="myModal-{{ $category->id }}" class="modal">
-                                        <div class="modal-content">
-                                            <span class="close" onclick="closeModal({{ $category->id }})">&times;</span>
-                                            <p>Bu kullanıcıyı silmek istediğinizden emin misiniz?</p>
-                                            <button class="btn btn-secondary mt-2" onclick="closeModal({{ $category->id }})">İptal</button>
-                                            <a  href="{{ route('categories.delete',$category->id) }}" class="btn btn-danger mt-2">Sil</a>
-                                        </div>
-                                    </div>
-                                </td>
+                                <td><a href="{{ route('show.edit_kategori', $category->slug) }}" class="btn btn-warning btn-sm btn-custom">Düzenle</a>
+                                <td><a href="{{ route('kategori_sil',$category->id) }}" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
                             </tr>
                         @endforeach
                     </table>
@@ -59,15 +49,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('js')
-<script>
-    function openModal(userId) {
-            document.getElementById("myModal-" + userId).style.display = "block";
-        }
-
-        function closeModal(userId) {
-            document.getElementById("myModal-" + userId).style.display = "none";
-        }
-</script>
 @endsection

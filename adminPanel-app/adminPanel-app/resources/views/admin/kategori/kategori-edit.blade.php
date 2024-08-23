@@ -22,18 +22,18 @@
         </div>
     @endif
     <div class="form-container">
-        <form action="{{ route('categories.update', $category->id) }}" method="POST">
+        <form action="{{ route('edit.kategori', $category->id) }}" method="POST">
             @csrf
             @method('PUT')
             <label>Kategori Adı :</label>
 
             <div class="input-group mb-3 mt-2">
-                <input type="text" name="categoryname" id="categoryname" value="{{ $category->categoryTitle }}" class="form-control">
+                <input type="text" name="kategoriAdı" id="kategoriAdı" value="{{ $category->categoryTitle }}" class="form-control">
             </div>
 
             <label>Kategori Açıklaması :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" name="categorydescription" id="categorydescription" value="{{ $category->categoryDescription }}" class="form-control">
+                <input type="text" name="kategoriAciklamasi" id="kategoriAciklamasi" value="{{ $category->categoryDescription }}" class="form-control">
             </div>
 
             <label>Durum :</label>
