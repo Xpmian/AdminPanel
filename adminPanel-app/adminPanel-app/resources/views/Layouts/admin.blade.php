@@ -55,7 +55,7 @@
                                             <a style="text-decoration:none;color:black" href="{{route('show.kategori_list_show')}}">
                                                 Kategori listeme formu
                                             </a>
-                                            <a style="text-decoration:none;color:black">
+                                            <a style="text-decoration:none;color:black" href="{{route('kategori_delete_list_show')}}">
                                                 Kategori silme
                                             </a>
                                         </div>

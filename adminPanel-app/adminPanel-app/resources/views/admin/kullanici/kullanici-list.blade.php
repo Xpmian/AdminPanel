@@ -31,7 +31,7 @@
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->userTitle }}</td>
                             <td><a href="{{ route('show.edit', $user->id) }}" class="btn btn-warning btn-sm">Düzenle</a></td>
-                            <td><a href="{{route('kullanici_sil_list')}}" class="btn btn-warning btn-sm">Sil</a></td>
+                            <td><a href="{{route('kategori_delete_list_show')}}" class="btn btn-danger btn-sm">Sil</a></td>
                         </tr>
                     @endforeach
                 </tbody>
