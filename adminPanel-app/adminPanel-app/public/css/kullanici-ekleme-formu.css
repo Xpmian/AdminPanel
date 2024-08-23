@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #d9d9d9;
+}
+
+#loginTitle {
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+}
+
+#loginDiv {
+    border-radius: 10px;
+    min-height: 400px;
+    padding: 1.5rem;
+    background: #284b63;
+}
+
+.formGroup {
+    text-align: center;
+    padding: 0.5rem 2rem;
+    margin: 0.5rem;
+}
+
+.formGroup label {
+    display: block;
+    text-align: left;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.formGroup input {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+}
+
+.btnForm {
+    border: none;
+    border-radius: 5px;
+    padding: 0.8rem 1rem;
+    margin: 0.5rem;
+    background-color: #CCCCCC;
+    font-weight: 600;
+}
+
+.error-message {
+    color: red;
+    display: none;
+}

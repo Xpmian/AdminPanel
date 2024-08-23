@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
-    public function Login(Request $request)
+    public function login(Request $request)
     {
         $name = $request->input('name');
         $psw = $request->input('psw');
@@ -24,7 +24,7 @@ class LoginController extends Controller
         }
         else
         {
-            return redirect()->intended('welcome');
+            return redirect()->intended('/admin/kullanici-list');
         }
 
     }
