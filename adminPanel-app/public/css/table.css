@@ -1,0 +1,170 @@
+.containerTotal {
+    background-color: #284b63;
+    margin: 30px auto;
+    margin-left: 100px;
+    margin-top: 70px;
+    border-radius: 20px;
+    padding: 20px;
+    max-width: 90%;
+    display: block;
+    margin: 5rem auto
+}
+
+.containerTable {
+    border-radius: 20px;
+    background-color: white;
+    margin: auto;
+    min-height: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+}
+
+.trCompany {
+    display: grid;
+    grid-template-columns: 20% 40% 20% 10% 10%;
+    text-align: center;
+    border-bottom: 2px solid #284b63;
+    align-items: center;
+}
+.trCompany:last-child {
+    border-bottom: none;
+}
+
+.containerUp {
+    background-color: white;
+    display: grid;
+    grid-template-columns: 20% 40% 20% 10% 10%;
+    grid-template-rows: 150px, 150px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.item-th {
+    padding: 15px;
+    text-align: center;
+}
+
+.btn-custom {
+    width: 70px;
+    height: 40px;
+    display: inline-block;
+    text-align: center;
+    line-height: 1.5;
+    margin-left: 10px;
+}
+
+#btnselectedDelete{
+    display: block;
+    margin:1rem auto;
+    width:20%;
+    font-size: 1.2rem;
+}
+
+
+.text-succes {
+    width: 300px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.inputbox {
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: white;
+    width: 300px;
+    height: 40px;
+}
+
+.containerUpKullanici {
+    background-color: white;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.containerUpKategori{
+    background-color: white;
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.containerUpProductDelete{
+    background-color: white;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.trCompanyKullanici {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    text-align: center;
+    border-bottom: 2px solid #284b63;
+    align-items: center;
+    min-height: 50px;
+}
+
+.trCompanyKategori{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    text-align: center;
+    border-bottom: 2px solid #284b63;
+    align-items: center;
+    min-height: 50px;
+}
+
+.trCompanyKategori:last-child {
+    border-bottom: none;
+}
+
+.trCompanyKullanici:last-child {
+    border-bottom: none;
+}
+
+.trCompanyProduct {
+    text-align: center;
+    border-bottom: 2px solid #284b63;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    padding: 0.5rem;
+}
+
+.trCompanyProductDelete{
+    text-align: center;
+    border-bottom: 2px solid #284b63;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    padding: 0.5rem;
+}
+
+.trCompanyProductDelete:last-child {
+    border-bottom: none;
+}
+
+.trCompanyProduct:last-child {
+    border-bottom: none;
+}
+
+.containerUpProduct {
+    background-color: white;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.formtable{
+    height: auto;
+    width: 100%;
+}
+
