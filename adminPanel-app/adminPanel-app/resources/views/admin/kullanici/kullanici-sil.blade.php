@@ -4,51 +4,46 @@
 @endsection
 
 @section('content')
-    <div class="container mt-4">
+    <div class="row">
         @if(session('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success text-succes" id="success-alert">
                 {{ session('success') }}
             </div>
         @endif
-
-        <h2 class="mb-4">Kullanıcı Sil</h2>
-
-        <form action="{{ route('kullanici_sil_list') }}" method="POST" id="softdelete-form">
-            @csrf
-            @method('DELETE')
-
-
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th><input type="checkbox" id="select-all"></th>
-                        <th>Kullanıcı Adı</th>
-                        <th>Kullanıcı Title</th>
-                        <th>Sil</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div class="containerTotal">
+            <div class="containerUp">
+                <div class="item-th">Kullanıcı Adı</div>
+                <div class="item-th">Kullanıcı Title</div>
+                <div class="item-th">Sil</div>
+            </div>
+            <div class="containerTable" style="overflow-x:auto;">
+            <form action="{{ route('delete_user_select') }}" method="POST" id="softdelete-form">
+                @csrf
+                @method('DELETE')
+                <table class="trCompany">
                     @foreach($users as $user)
                         <tr>
                             <td><input type="checkbox" name="user_ids[]" value="{{ $user->id }}"></td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->userTitle }}</td>
-                            <td><a href="{{ route('kullanici_sil', $user->id) }}" class="btn btn-danger btn-sm">Sil</a></td>
+                            <td><a href="{{ route('kullanici_sil', $user->id) }}" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
-        </form>
-    </div>
+                </table>
+                <button type="submit" class="btn btn-danger btn-sm btn-custom">Seçilenleri Sil</button>
+            </form>
 
-    @section('js')
-        <script>
-            document.getElementById('select-all').addEventListener('change', function() {
-                const isChecked = this.checked;
-                document.querySelectorAll('input[name="user_ids[]"]').forEach(checkbox => {
-                    checkbox.checked = isChecked;
-                });
-            });
-        </script>
-    @endsection
+        </div>
+    </div>
+</div>
+@endsection
+@section('js')
+<script>
+    document.getElementById('select-all').addEventListener('change', function() {
+        const isChecked = this.checked;
+        document.querySelectorAll('input[name="user_ids[]"]').forEach(checkbox => {
+            checkbox.checked = isChecked;
+        });
+    });
+</script>
 @endsection

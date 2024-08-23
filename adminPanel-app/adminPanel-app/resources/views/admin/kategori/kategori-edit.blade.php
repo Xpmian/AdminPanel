@@ -1,7 +1,12 @@
 @extends('layouts.admin')
 
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/table.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/kullanici-ekleme-formu.css') }}">
+@endsection
+
 @section('content')
-    <h2>Kullanıcıyı Düzenle</h2>
+    <h2 class="centered-title">Kategoriyi Düzenle</h2>
 
     @if(session('success'))
         <div class="alert alert-success">
@@ -18,26 +23,31 @@
             </ul>
         </div>
     @endif
+    <div class="form-container">
+        <form action="{{ route('edit.kategori', $category->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <label>Kategori Adı :</label>
 
-    <form action="{{ route('edit.register', $user->id) }}" method="POST">
-        @csrf
-        @method('PUT')
+            <div class="input-group mb-3 mt-2">
+                <input type="text" name="kategoriAdı" id="kategoriAdı" value="{{ $category->categoryTitle }}" class="form-control">
+            </div>
 
-        <div class="form-group">
-            <label for="username">Kullanıcı Adı:</label>
-            <input type="text" name="username" id="username" value="{{ $user->username }}" class="form-control">
-        </div>
+            <label>Kategori Açıklaması :</label>
+            <div class="input-group mb-3 mt-2">
+                <input type="text" name="kategoriAciklamasi" id="kategoriAciklamasi" value="{{ $category->categoryDescription }}" class="form-control">
+            </div>
 
-        <div class="form-group">
-            <label for="userTitle">Kullanıcı Title:</label>
-            <input type="text" name="userTitle" id="userTitle" value="{{ $user->userTitle }}" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="password">Şifre:</label>
-            <input type="text" name="password" id="password" class="form-control">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Güncelle</button>
-    </form>
+            <label>Durum :</label>
+            <div class="form-block">
+                <div class="input-group mb-3 mt-2">
+                    <select id="number-select" name="status" class="form-control">
+                        <option value="0" {{ $category->status == 0 ? 'selected' : '' }}>0</option>
+                        <option value="1" {{ $category->status == 1 ? 'selected' : '' }}>1</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-custom mt-3">Güncelle</button>
+        </form>
+    </div>
 @endsection

@@ -64,9 +64,10 @@ class AdminController extends Controller
 
     public function register_kullanici_edit(Request $request, $id)
     {
-        $existingUser = Userss:: where('username', $request->input('username'))
-                                ->where('id', '<>', $id)
-                                ->first();
+        $existingUser = Userss::where('username', $request->input('username'))
+                       ->where('id', '<>', $id)
+                       ->first();
+
         $user = Userss::find($id);
 
         if (!$user)
@@ -108,5 +109,18 @@ class AdminController extends Controller
             return redirect()->route('kullanici_list')->with('success', 'Kullanıcı başarıyla silindi.');
         }
         return redirect()->route('kullanici_list')->withErrors(['error' => 'Kullanıcı bulunamadı.']);
+    }
+
+    public function deleteUserSelect(Request $request)
+    {
+        $userIds = $request->input('user_ids');
+
+        if (!$userIds)
+        {
+            return redirect()->back()->withErrors(['error' => 'Silinecek kullanıcı seçilmedi.']);
+        }
+        Userss::whereIn('id', $userIds)->update(['deleted_at' => now()]);
+
+        return redirect()->route('kullanici_list')->with('success', 'Seçilen kullanıcılar başarıyla silindi.');
     }
 }
