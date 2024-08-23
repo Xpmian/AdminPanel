@@ -18,19 +18,19 @@ class CategoryController extends Controller
         return $slug;
     }
 
-    public function kategori_list_show()
+    public function showCategoryList()
     {
-        $kategoriler = Category::orderBy('categoryTitle', 'asc')->get();
+        $categories = Category::orderBy('categoryTitle', 'asc')->get();
 
-        return view('admin.kategori.kategori-list', compact('kategoriler'));
+        return view('admin.kategori.kategori-list', compact('categories'));
     }
 
-    public function kategori_ekleme_show()
+    public function showCategoryCreateForm()
     {
         return view('admin.kategori.kategori-ekleme-formu');
     }
 
-    public function kategori_ekleme_register(Request $request)
+    public function registerCategory(Request $request)
     {
 
         if(!($request->filled('kategoriAdı')) || !($request->filled('kategoriAciklamasi')))
@@ -42,6 +42,7 @@ class CategoryController extends Controller
         $kategori_Aciklamasi = $request->input('kategoriAciklamasi');
         $kategori_status = $request->input('status');
         $slug = $this->createSlug($kategori_Adi);
+        
         $category = Category:: where('categoryTitle', $kategori_Adi)->first();
 
         if($category == null)
@@ -62,54 +63,7 @@ class CategoryController extends Controller
         }
     }
 
-    public function show_kategori_delete_list()
-    {
-        $kategoriler = Category::orderBy('categoryTitle', 'asc')->get();
-
-        return view('admin.kategori.kategori-sil', compact('kategoriler'));
-    }
-
-    public function delete_kategori($id)
-    {
-        $category = Category::find($id);
-        $urunler = Product::where('productCategoryId',$id)->orderBy('productTitle', 'asc')
-                                                          ->get();
-
-        if ($category)
-        {
-            $category->delete();
-            foreach ($urunler as $urun)
-            {
-                $urun->productCategoryId = null;
-                $urun->save();
-            }
-
-            return redirect()->route('show.kategori_list_show')->with('success', 'Kategori başarıyla silindi.');
-        }
-
-        // return redirect()->route('kategori_list_show')->withErrors(['error' => 'Kategori bulunamadı.']);
-        abort(404, 'Kategori bulunamadı.');
-    }
-
-    public function deleteCategorySelect(Request $request)
-    {
-        $categoryIds = $request->input('user_ids');
-
-        if (!$categoryIds)
-        {
-            return redirect()->back()->withErrors(['error' => 'Silinecek kategori seçilmedi.']);
-        }
-
-        Category::whereIn('id', $categoryIds)->delete();
-        Product::whereIn('productCategoryId', $categoryIds)->update([
-            'productCategoryId' => null,
-            'productStatus' => 0,
-        ]);
-
-        return redirect()->route('show.kategori_list_show')->with('success', 'Seçilen kategoriler başarıyla silindi.');
-    }
-
-    public function show_edit_kategori($slug)
+    public function showCategoryEditForm($slug)
     {
         $category = Category::where('slug',$slug)->first();
 
@@ -124,7 +78,7 @@ class CategoryController extends Controller
         }
     }
 
-    public function edit_kategori($id,Request $request)
+    public function updateCategory($id,Request $request)
     {
         $existingKategori = Category:: where('categoryTitle', $request->input('kategoriAdı'))
                                        ->where('id', '<>', $id)
@@ -169,5 +123,52 @@ class CategoryController extends Controller
         }
 
         return redirect()->route('show.kategori_list_show')->with('success', 'Kategori bilgileri başarıyla güncellendi.');
+    }
+
+    public function showCategoryDeleteList()
+    {
+        $kategoriler = Category::orderBy('categoryTitle', 'asc')->get();
+
+        return view('admin.kategori.kategori-sil', compact('kategoriler'));
+    }
+
+    public function deleteCategory($id)
+    {
+        $category = Category::find($id);
+        $urunler = Product::where('productCategoryId',$id)->orderBy('productTitle', 'asc')
+                                                          ->get();
+
+        if ($category)
+        {
+            $category->delete();
+            foreach ($urunler as $urun)
+            {
+                $urun->productCategoryId = null;
+                $urun->save();
+            }
+
+            return redirect()->route('show.kategori_list_show')->with('success', 'Kategori başarıyla silindi.');
+        }
+
+        // return redirect()->route('kategori_list_show')->withErrors(['error' => 'Kategori bulunamadı.']);
+        abort(404, 'Kategori bulunamadı.');
+    }
+
+    public function deleteSelectedCategories(Request $request)
+    {
+        $categoryIds = $request->input('user_ids');
+
+        if (!$categoryIds)
+        {
+            return redirect()->back()->withErrors(['error' => 'Silinecek kategori seçilmedi.']);
+        }
+
+        Category::whereIn('id', $categoryIds)->delete();
+        Product::whereIn('productCategoryId', $categoryIds)->update([
+            'productCategoryId' => null,
+            'productStatus' => 0,
+        ]);
+
+        return redirect()->route('show.kategori_list_show')->with('success', 'Seçilen kategoriler başarıyla silindi.');
     }
 }

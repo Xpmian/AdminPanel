@@ -11,35 +11,31 @@
         </div>
     @endif
 
-    @if($errors->any())
+    @if(session('error'))
         <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            {{ session('error') }}
         </div>
     @endif
     <div class="form-container">
-        <form action="{{ route('registerProduct') }}" method="POST">
+        <form action="{{ route('products.create') }}" method="POST">
             @csrf
             <label>Ürün Adı :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" class="form-control" placeholder="Ürün Adı " name="ProductTitle">
+                <input type="text" class="form-control" placeholder="Ürün Adı " name="ProductTitle" required>
             </div>
 
             <label>Ürün Kategori ID :</label>
             <div class="input-group mb-3 mt-2">
                 <select id="number-select" name="ProductCategoryId" class="form-control">
-                    @foreach ($kategoriler as $kategori )
-                        <option value="{{$kategori->id}}">{{$kategori->categoryTitle}}</option>
+                    @foreach ($categories as $categorie )
+                        <option value="{{$categorie->id}}">{{$categorie->categoryTitle}}</option>
                     @endforeach
                 </select>
             </div>
 
             <label>Barcode :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="number" class="form-control" placeholder="Ürün Barkodu" name="Barcode">
+                <input type="number" class="form-control" placeholder="Ürün Barkodu" name="Barcode" required>
             </div>
             <label>Ürün Durumu :</label>
             <div class="input-group mb-3 mt-2">
@@ -50,11 +46,11 @@
             </div>
             <label>Fiyat :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="number" class="form-control" placeholder="Ürün Fiyatı" name="Price">
+                <input type="number" class="form-control" placeholder="Ürün Fiyatı" name="Price" required>
             </div>
             <label>Stok :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="number" class="form-control" placeholder="Ürün Stoğu" name="Stock">
+                <input type="number" class="form-control" placeholder="Ürün Stoğu" name="Stock" required>
             </div>
             <button type="submit" class="btn btn-custom mt-3">Kaydet</button>
         </form>
