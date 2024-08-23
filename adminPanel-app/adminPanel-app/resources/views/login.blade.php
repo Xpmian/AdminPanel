@@ -5,59 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <title>Document</title>
-    <style>
-        * {
-            margin: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background-color: #d9d9d9;
-        }
-        #loginTitle {
-            font-size: 2rem;
-            text-align: center;
-            font-weight: bold;
-            color: white;
-        }
-        #loginDiv {
-            border-radius: 10px;
-            min-height: 400px;
-            padding: 1.5rem;
-            background: #284b63;
-        }
-        .formGroup {
-            text-align: center;
-            padding: 0.5rem 2rem;
-            margin: 0.5rem;
-        }
-        .formGroup label {
-            display: block;
-            text-align: left;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        .formGroup input {
-            width: 100%;
-            padding: 0.5rem;
-            border: none;
-            border-radius: 5px;
-        }
-        .btnForm {
-            border: none;
-            border-radius: 5px;
-            padding: 0.8rem 1rem;
-            margin: 0.5rem;
-            background-color: #CCCCCC;
-            font-weight: 600;
-        }
-    </style>
 </head>
 <body>
     <div class="container" style="height: 100vh;">
         <div class="row justify-content-around align-items-center" style="height: 100%;">
             <div class="col-xs-12 col-lg-6" id="loginDiv">
-                <h2 id="loginTitle">LOGIN</h2>
+                <h2 id="loginTitle">Giriş Ekranı</h2>
 
                 @if ($errors->any())
                     <div class="alert alert-danger">
