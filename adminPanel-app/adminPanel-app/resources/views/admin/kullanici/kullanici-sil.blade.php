@@ -24,7 +24,7 @@
                         <th><input type="checkbox" id="select-all"></th>
                         <th>Kullanıcı Adı</th>
                         <th>Kullanıcı Title</th>
-                        <th>Button</th>
+                        <th>Sil</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +33,7 @@
                             <td><input type="checkbox" name="user_ids[]" value="{{ $user->id }}"></td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->userTitle }}</td>
-                            <td><a href="{{ route('kullanici_sil', $user->id) }}" class="btn btn-warning btn-sm">Sil</a></td>
+                            <td><a href="{{ route('kullanici_sil', $user->id) }}" class="btn btn-danger btn-sm">Sil</a></td>
                         </tr>
                     @endforeach
                 </tbody>

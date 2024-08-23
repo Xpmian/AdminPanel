@@ -46,4 +46,64 @@ class CategoryController extends Controller
         }
     }
 
+    public function show_kategori_delete_list()
+    {
+        $kategoriler = Category::all();
+        return view('admin.kategori.kategori-sil', compact('kategoriler'));
+    }
+
+    public function delete_kategori($id)
+    {
+        $category = Category::find($id);
+
+        if ($category)
+        {
+            $category->delete();
+            return redirect()->route('show.kategori_list_show')->with('success', 'kategori başarıyla silindi.');
+        }
+        return redirect()->route('kategori_list_show')->withErrors(['error' => 'Kategori bulunamadı.']);
+    }
+
+    public function show_edit_kategori($id)
+    {
+        $category = Category::find($id);
+        if($category)
+        {
+            return view("admin.kategori.kategori-edit",compact("category"));
+        }
+        return redirect()->route('kullanici_list')->with('error', 'Kullanıcı bulunamadı.');
+    }
+
+    public function edit_kategori($id,Request $request)
+    {
+        $existingKategori = Category:: where('categoryTitle', $request->input('kategoriAdı'))
+                                      ->where('id', '<>', $id)
+                                       ->first();
+        $category = Category::find($id);
+
+        if (!$category)
+        {
+            return redirect()->back()->withErrors(['error' => 'Kategori bulunamadı']);
+        }
+        if(!$existingKategori)
+        {
+            if ($request->filled('kategoriAdı') && $request->filled('kategoriAciklamasi'))
+            {
+                $category->categoryTitle = $request->input('kategoriAdı');
+                $category->categoryDescription = $request->input('kategoriAciklamasi');
+                $category->status = $request->input('status');
+
+                $category->save();
+            }
+            else
+            {
+                return redirect()->back()->withErrors(['error' => 'Boş bırakılamaz']);
+            }
+        }
+        else
+        {
+            return redirect()->back()->withErrors(['error' => 'Bu isme sahip bir kategori mevcut']);
+        }
+        return redirect()->route('show.kategori_list_show')->with('success', 'Kategori bilgileri başarıyla güncellendi.');
+    }
 }
