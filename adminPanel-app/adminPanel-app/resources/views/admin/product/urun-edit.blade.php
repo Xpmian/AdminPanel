@@ -6,7 +6,6 @@
 @endsection
 
 @section('content')
-    <h2 class="centered-title">Ürün Düzenle</h2>
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -31,7 +30,7 @@
                 <input type="text" name="ProductTitle" id="ProductTitle" value="{{ $urun->productTitle }}" class="form-control">
             </div>
 
-            <label>Ürün Kategori ID :</label>
+            <label>Ürün Kategori :</label>
             <div class="input-group mb-3 mt-2">
                 <select id="number-select" name="ProductCategoryId" class="form-control">
                     @foreach ($kategoriler as $kategori )
@@ -42,21 +41,32 @@
                 </select>
             </div>
 
-            <label>Barcode :</label>
+            <label>Ürün Barcode :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" name="Barcode" id="Barcode" value="{{ $urun->barcode }}" class="form-control">
+                <input type="number" name="Barcode" id="Barcode" value="{{ $urun->barcode }}" class="form-control">
             </div>
 
-            <label>Durum:</label>
+            <label>Ürün Durum :</label>
             <div class="form-block">
                 <div class="input-group mb-3 mt-2">
                     <select id="number-select" name="status" class="form-control">
-                        <option value="0" {{ $urun->productStatus == 0 ? 'selected' : '' }}>0</option>
-                        <option value="1" {{ $urun->productStatus == 1 ? 'selected' : '' }}>1</option>
+                        <option style="color: red; font-weight: bold;" value="0" {{ $urun->productStatus == 0 ? 'selected' : '' }}>Pasif</option>
+                        <option style="color: green; font-weight: bold;" value="1" {{ $urun->productStatus == 1 ? 'selected' : '' }}>Aktif</option>
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-custom mt-3">Güncelle</button>
+
+            <label>Ürün Fiyatı :</label>
+            <div class="input-group mb-3 mt-2">
+                <input type="number" name="price" id="price" value="{{ $urun->price }}" class="form-control">
+            </div>
+
+            <label>Ürün Stoğu :</label>
+            <div class="input-group mb-3 mt-2">
+                <input type="number" name="stock" id="stock" value="{{ $urun->stock }}" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-custom">Güncelle</button>
         </form>
     </div>
 @endsection

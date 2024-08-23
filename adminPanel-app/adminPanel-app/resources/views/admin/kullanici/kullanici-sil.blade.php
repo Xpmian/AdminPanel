@@ -11,7 +11,8 @@
             </div>
         @endif
         <div class="containerTotal">
-            <div class="containerUp">
+            <div class="containerUpKullanici">
+                <div class="item-th"><input type="checkbox" id="select-all"> Hepsini Seç</div>           
                 <div class="item-th">Kullanıcı Adı</div>
                 <div class="item-th">Kullanıcı Title</div>
                 <div class="item-th">Sil</div>
@@ -20,9 +21,9 @@
             <form action="{{ route('delete_user_select') }}" method="POST" id="softdelete-form">
                 @csrf
                 @method('DELETE')
-                <table class="trCompany">
+                <table class="formtable">
                     @foreach($users as $user)
-                        <tr>
+                        <tr class="trCompanyKullanici">
                             <td><input type="checkbox" name="user_ids[]" value="{{ $user->id }}"></td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->userTitle }}</td>
@@ -30,7 +31,7 @@
                         </tr>
                     @endforeach
                 </table>
-                <button type="submit" class="btn btn-danger btn-sm btn-custom">Seçilenleri Sil</button>
+                <button type="submit" id="btnselectedDelete" class="btn btn-danger btn-sm btn-custom">Seçilenleri Sil</button>
             </form>
 
         </div>
@@ -39,6 +40,15 @@
 @endsection
 @section('js')
 <script>
+    document.getElementById('select-all').addEventListener('change', function() {
+        const isChecked = this.checked;
+        document.querySelectorAll('input[name="user_ids[]"]').forEach(checkbox => {
+            checkbox.checked = isChecked;
+        });
+    });
+</script>
+<script>
+    // Hepsini Seç Checkbox
     document.getElementById('select-all').addEventListener('change', function() {
         const isChecked = this.checked;
         document.querySelectorAll('input[name="user_ids[]"]').forEach(checkbox => {

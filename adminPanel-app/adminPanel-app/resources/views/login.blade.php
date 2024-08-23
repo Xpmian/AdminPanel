@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
-    <title>Document</title>
+    <title>Login</title>
 </head>
 <body>
     <div class="container" style="height: 100vh;">
@@ -23,12 +23,12 @@
                 <form action="{{ route('aut.login') }}" method="POST">
                     @csrf
                     <div class="formGroup">
-                        <label for="uname">Kullanıcı Adı:</label>
+                        <label for="uname">Kullanıcı Adı :</label>
                         <input type="text" placeholder="Kullanıcı adını giriniz!" name="name" required>
                     </div>
 
                     <div class="formGroup">
-                        <label for="psw">Şifre:</label>
+                        <label for="psw">Şifre :</label>
                         <input type="password" placeholder="Şifreyi giriniz!" name="psw" required>
                     </div>
 

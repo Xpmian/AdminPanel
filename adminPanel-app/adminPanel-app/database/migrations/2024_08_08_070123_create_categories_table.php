@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string("categoryTitle");
-            $table->string("categoryDescription");
+            $table->text("categoryDescription");
             $table->unsignedBigInteger("status")->default(0);
+            $table->string('slug')->unique();
             $table->softDeletes();
             $table->timestamps();
         });

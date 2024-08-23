@@ -22,6 +22,9 @@ class ProductFactory extends Factory
             "productCategoryId"=> random_int(1,10),
             "barcode"=> random_int(100,500),
             "productStatus"=> random_int(0,1),
+            "price" => random_int(0,1000),
+            "stock" => random_int(0,100),
+            'slug' => fake()->name(),
         ];
     }
 }

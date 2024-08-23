@@ -20,6 +20,7 @@ class CategoryFactory extends Factory
             "categoryTitle"=>fake()->title,
             "categoryDescription"=> fake()->text,
             "status"=> random_int(0,1),
+            'slug' => fake()->name()
         ];
     }
 }

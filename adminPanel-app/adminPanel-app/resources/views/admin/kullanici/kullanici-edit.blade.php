@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <h2 class="centered-title">Kullanıcı Düzenle</h2>
+    {{-- <h2 class="centered-title">Kullanıcı Düzenle</h2> --}}
 
     @if(session('success'))
         <div class="alert alert-success">
@@ -24,7 +24,7 @@
         </div>
     @endif
     <div class="form-container">
-        <form action="{{ route('edit.register', $user->id) }}" method="POST">
+        <form action="{{ route('edit.register', $user->id   ) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -45,4 +45,5 @@
 
             <button type="submit" class="btn btn-custom mt-3">Güncelle</button>
         </form>
+
 @endsection

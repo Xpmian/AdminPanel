@@ -12,7 +12,8 @@
             </div>
         @endif
         <div class="containerTotal">
-            <div class="containerUp">
+            <div class="containerUpKategori">
+                <div class="item-th"><input type="checkbox" id="select-all"> Hepsini Seç</div>
                 <div class="item-th">Kategori Adı</div>
                 <div class="item-th">Kategori Açıklaması</div>
                 <div class="item-th">Durum</div>
@@ -23,21 +24,23 @@
                 <form action="{{ route('delete_category_select') }}" method="POST" id="softdelete-form">
                     @csrf
                     @method('DELETE')
-                    <table>
+                    <table >
                         @foreach ($kategoriler as $kategori)
-                            <tr class="trCompany">
+                            <tr class="trCompanyKategori">
                                 <td><input type="checkbox" name="user_ids[]" value="{{ $kategori->id }}"></td>
                                 <td>{{ $kategori->categoryTitle }}</td>
                                 <td>{{ $kategori->categoryDescription }}</td>
                                 @if ($kategori->status == 1)
-                                    <td>Aktif</td>
+                                    <td style="color: green; font-weight: bold;">Aktif</td>
                                 @elseif ($kategori->status == 0)
-                                    <td>Pasif</td>
+                                    <td style="color: red; font-weight: bold;">Pasif</td>
                                 @endif
+                                <td><a href="#" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
+
                             </tr>
                         @endforeach
                     </table>
-                    <button type="submit" class="btn btn-danger btn-sm btn-custom">Seçilenleri Sil</button>
+                    <button type="submit" id="btnselectedDelete"  class="btn btn-danger btn-sm btn-custom">Seçilenleri Sil</button>
                 </form>
             </div>
         </div>
@@ -45,6 +48,15 @@
 @endsection
 @section('js')
 <script>
+    document.getElementById('select-all').addEventListener('change', function() {
+        const isChecked = this.checked;
+        document.querySelectorAll('input[name="user_ids[]"]').forEach(checkbox => {
+            checkbox.checked = isChecked;
+        });
+    });
+</script>
+<script>
+    // Hepsini Seç Checkbox
     document.getElementById('select-all').addEventListener('change', function() {
         const isChecked = this.checked;
         document.querySelectorAll('input[name="user_ids[]"]').forEach(checkbox => {

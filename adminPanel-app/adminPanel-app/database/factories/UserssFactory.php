@@ -19,7 +19,8 @@ class UserssFactory extends Factory
         return [
             "username"=> fake()->userName,
             "userTitle"=> fake()->title,
-            "password"=> "123"
+            "password"=> "123",
+            'slug' => fake()->name()
         ];
     }
 }

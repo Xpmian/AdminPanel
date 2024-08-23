@@ -38,10 +38,45 @@
     background-color: #1a2a37; /* Butona tıklanıldığında arka plan rengini değiştirir */
 }
 
-.centered-title {
+.hero {
+    display: flex;
+    justify-content: center;
     text-align: center;
-    font-weight: 500; /* Daha az kalın */
-    font-size: 2.5em; /* İsteğe bağlı: Boyutu ayarlayabilirsiniz */
 }
 
+.cardImg img {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+}
 
+.cardImg {
+    margin: 3rem;
+}
+
+.labelProfilePhoto {
+    display: block;
+    width: 80%;
+    background-color: #e3362c;
+    color: white;
+    padding: 12px;
+    margin: 20px auto;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.inputImg {
+    display: none;
+}
+
+.imagecard{
+    margin: auto;
+    padding: 13%;
+}
+
+.warning {
+    color: red; /* Uyarı metnini kırmızı renkte yapar */
+    font-weight: bold; /* Metni kalın yapar */
+    font-size: 1rem; /* Metin boyutunu biraz küçültür */
+    margin-left: 5px; /* Etiket ile uyarı arasında boşluk bırakır */
+}
