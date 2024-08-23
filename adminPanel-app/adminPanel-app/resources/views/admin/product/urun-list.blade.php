@@ -91,7 +91,17 @@
                                 <td>{{ $product->stock }}</td>
                                 <td><a href="{{ route('products.image.upload.form', ['slug' => $product->slug]) }}" class="btn btn-primary btn-sm btn-custom">Resim</a></td>
                                 <td><a href="{{ route('products.edit.form', ['slug' => $product->slug]) }}" class="btn btn-warning btn-sm btn-custom">Düzenle</a></td>
-                                <td><a href="{{ route('products.delete', $product->product_id) }}" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm btn-custom" onclick="openModal({{ $product->product_id }})">Sil</button>
+                                    <div id="myModal-{{ $product->product_id }}" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" onclick="closeModal({{ $product->product_id }})">&times;</span>
+                                            <p>Bu kullanıcıyı silmek istediğinizden emin misiniz?</p>
+                                            <button class="btn btn-secondary mt-2" onclick="closeModal({{ $product->product_id }})">İptal</button>
+                                            <a href="{{ route('products.delete', $product->product_id) }}" class="btn btn-danger mt-2">Sil</a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </table>
@@ -99,4 +109,15 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+<script>
+    function openModal(userId) {
+            document.getElementById("myModal-" + userId).style.display = "block";
+        }
+
+        function closeModal(userId) {
+            document.getElementById("myModal-" + userId).style.display = "none";
+        }
+</script>
 @endsection

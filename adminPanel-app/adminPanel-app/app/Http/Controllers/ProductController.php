@@ -13,6 +13,11 @@ class ProductController extends Controller
 {
     public function createSlug($string, $id)
     {
+        $turkishChars = array('ş', 'ı', 'İ', 'ğ', 'ü', 'ç', 'ö', 'Ş', 'Ğ', 'Ü', 'Ç', 'Ö');
+        $englishChars = array('s', 'i', 'i', 'g', 'u', 'c', 'o', 's', 'g', 'u', 'c', 'o');
+
+        $string = str_replace($turkishChars, $englishChars, $string);
+
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string)));
         $slug .= '-' . $id;
 
@@ -52,7 +57,8 @@ class ProductController extends Controller
 
     public function registerProduct(Request $request)
     {
-        $existingProduct = Product::where('barcode', $request->input('Barcode'))->first();
+        $existingProduct = Product::withTrashed()
+                                    ->where('barcode', $request->input('Barcode'))->first();
 
         if (!$existingProduct)
         {
@@ -96,7 +102,8 @@ class ProductController extends Controller
     public function updateProduct(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-        $existingProduct = Product::where('barcode', $request->input('Barcode'))
+        $existingProduct = Product::withTrashed()
+                                   ->where('barcode', $request->input('Barcode'))
                                    ->where('id', '<>', $id)
                                    ->first();
 
@@ -129,7 +136,8 @@ class ProductController extends Controller
 
     public function showProductDeleteList()
     {
-        $products = DB::table('product_category_view')->orderBy('productTitle', 'asc')
+        $products = DB::table('product_category_view')->whereNull('deleted_at')
+                                                      ->orderBy('productTitle', 'asc')
                                                       ->get();
 
         return view('admin.product.urun-sil',compact('products'));
@@ -154,7 +162,7 @@ class ProductController extends Controller
 
         Product::whereIn('id', $productIds)->delete();
 
-        return redirect()->route('products.list')->with('success', 'Seçilen ürünler başarıyla silindi.');
+        return redirect()->route('products.delete.list')->with('success', 'Seçilen ürünler başarıyla silindi.');
     }
 
     public function showImageUpload($slug)

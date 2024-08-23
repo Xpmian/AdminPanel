@@ -21,31 +21,51 @@
             </div>
 
             <div class="containerTable" style="overflow-x:auto;">
-                <form action="{{ route('delete_category_select') }}" method="POST" id="softdelete-form">
+                <form action="{{ route('categories.delete.selected') }}" method="POST" id="softdelete-form">
                     @csrf
                     @method('DELETE')
-                    <table >
-                        @foreach ($kategoriler as $kategori)
+                    <table>
+                        @foreach ($categories as $category)
                             <tr class="trCompanyKategori">
-                                <td><input type="checkbox" name="user_ids[]" value="{{ $kategori->id }}"></td>
-                                <td>{{ $kategori->categoryTitle }}</td>
-                                <td>{{ $kategori->categoryDescription }}</td>
-                                @if ($kategori->status == 1)
+                                <td><input type="checkbox" name="user_ids[]" value="{{ $category->id }}"></td>
+                                <td>{{ $category->categoryTitle }}</td>
+                                <td>{{ $category->categoryDescription }}</td>
+                                @if ($category->status == 1)
                                     <td style="color: green; font-weight: bold;">Aktif</td>
-                                @elseif ($kategori->status == 0)
+                                @elseif ($category->status == 0)
                                     <td style="color: red; font-weight: bold;">Pasif</td>
                                 @endif
-                                <td><a href="#" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
-
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm btn-custom" onclick="openModal({{ $category->id }})">Sil</button>
+                                    <div id="myModal-{{ $category->id }}" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" onclick="closeModal({{ $category->id }})">&times;</span>
+                                            <p>Bu kategoriyi silmek istediğinizden emin misiniz?</p>
+                                            <button class="btn btn-secondary mt-2" onclick="closeModal({{ $category->id }})">İptal</button>
+                                            <a href="{{ route('categories.delete', $category->id) }}" class="btn btn-danger mt-2">Sil</a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </table>
-                    <button type="submit" id="btnselectedDelete"  class="btn btn-danger btn-sm btn-custom">Seçilenleri Sil</button>
+                    <button type="button" id="btnselectedDelete" class="btn btn-danger btn-sm btn-custom" onclick="openBulkDeleteModal()">Seçilenleri Sil</button>
                 </form>
+
+                <!-- Toplu Silme İçin Modal -->
+                <div id="bulkDeleteModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeBulkDeleteModal()">&times;</span>
+                        <p>Seçilen tüm kategorileri silmek istediğinizden emin misiniz?</p>
+                        <button class="btn btn-secondary mt-2" onclick="closeBulkDeleteModal()">İptal</button>
+                        <button type="button" class="btn btn-danger mt-2" onclick="document.getElementById('softdelete-form').submit();">Sil</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 @endsection
+
 @section('js')
 <script>
     document.getElementById('select-all').addEventListener('change', function() {
@@ -54,14 +74,21 @@
             checkbox.checked = isChecked;
         });
     });
-</script>
-<script>
-    // Hepsini Seç Checkbox
-    document.getElementById('select-all').addEventListener('change', function() {
-        const isChecked = this.checked;
-        document.querySelectorAll('input[name="user_ids[]"]').forEach(checkbox => {
-            checkbox.checked = isChecked;
-        });
-    });
+
+    function openModal(categoryId) {
+        document.getElementById("myModal-" + categoryId).style.display = "block";
+    }
+
+    function closeModal(categoryId) {
+        document.getElementById("myModal-" + categoryId).style.display = "none";
+    }
+
+    function openBulkDeleteModal() {
+        document.getElementById("bulkDeleteModal").style.display = "block";
+    }
+
+    function closeBulkDeleteModal() {
+        document.getElementById("bulkDeleteModal").style.display = "none";
+    }
 </script>
 @endsection

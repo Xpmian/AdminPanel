@@ -6,28 +6,30 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {return view('login');})->name('login.form');
-Route::post("/", [LoginController::class,'login'])->name("aut.login");
+Route::get('/', function () {return redirect()->route('login.form');});
+Route::get('/login', function () {return view('login');})->name('login.form');
+Route::post('/logout', [LoginController::class, 'logoff'])->name('login.off');
+Route::post("/login", [LoginController::class,'login'])->name("aut.login");
 
 Route::prefix("/admin")->group(function ()
 {
-    Route::get('/kullanici-ekleme-formu', function () {return view('admin.kullanici.kullanici-ekleme-formu');})->name("show");
-    Route::get('/kullanici-list', [AdminController::class,'show_user_list'])->name("kullanici_list");
-    Route::post('/kullanici-ekleme-formu',[AdminController::class,'register_user'])->name("register");
-    Route::get('/kullanici-edit/{user:slug}', [AdminController::class, 'show_kullanici_edit'])->name('show.edit');
-    Route::put('/kullanici-edit/{user}', [AdminController::class, 'register_kullanici_edit'])->name('edit.register');
-    Route::get('/kullanici-sil', [AdminController::class,'show_delete_list'])->name("kullanici_sil_list");
-    Route::get('/kullanici-sil/{id}', [AdminController::class,'delete_user'])->name("kullanici_sil");
-    Route::delete('/kullanici-sil', [AdminController::class, 'deleteUserSelect'])->name('delete_user_select');
+    Route::get('/kullanici-list', [AdminController::class,'showUserList'])->name("users.list");
+    Route::get('/kullanici-ekleme-formu', [AdminController::class,'showUsersCreateForm'])->name("users.create.form");
+    Route::post('/kullanici-ekleme-formu',[AdminController::class,'registerUser'])->name("users.create");
+    Route::get('/kullanici-edit/{user:slug}', [AdminController::class, 'showUserEditForm'])->name('users.edit.form');
+    Route::put('/kullanici-edit/{user}', [AdminController::class, 'updateUser'])->name('users.update');
+    Route::get('/kullanici-sil', [AdminController::class,'showUserDeleteList'])->name("users.delete.list");
+    Route::get('/kullanici-sil/{id}', [AdminController::class,'deleteUser'])->name("users.delete");
+    Route::delete('/kullanici-sil', [AdminController::class, 'deleteSelectedUsers'])->name('users.delete.selected');
 
-    Route::get('/kategori-list',[CategoryController::class,'showCategoryList'])->name("show.kategori_list_show");
-    Route::get('/kategori-ekleme-formu',[CategoryController::class,'showCategoryCreateForm'])->name("show.kategori_ekleme_formu");
-    Route::post('/kategori-ekleme-formu',[CategoryController::class,'registerCategory'])->name("register.kategori_ekleme_formu");
-    Route::get('/kategori-edit/{slug}', [CategoryController::class,'showCategoryEditForm'])->name("show.edit_kategori");
-    Route::put('/kategori-edit/{id}', [CategoryController::class, 'edit_kategori'])->name('edit.kategori');
-    Route::get('/kategori-sil',[CategoryController::class,'showCategoryDeleteList'])->name("kategori_delete_list_show");
-    Route::get('/kategori-sil/{id}', [CategoryController::class,'deleteCategory'])->name("kategori_sil");
-    Route::delete('/kategori-sil', [CategoryController::class, 'deleteSelectedCategories'])->name('delete_category_select');
+    Route::get('/kategori-list',[CategoryController::class,'showCategoryList'])->name("categories.list");
+    Route::get('/kategori-ekleme-formu',[CategoryController::class,'showCategoryCreateForm'])->name("categories.create.form");
+    Route::post('/kategori-ekleme-formu',[CategoryController::class,'registerCategory'])->name("categories.create");
+    Route::get('/kategori-edit/{slug}', [CategoryController::class,'showCategoryEditForm'])->name("categories.edit.form");
+    Route::put('/kategori-edit/{id}', [CategoryController::class, 'updateCategory'])->name('categories.update');
+    Route::get('/kategori-sil',[CategoryController::class,'showCategoryDeleteList'])->name("categories.delete.list");
+    Route::get('/kategori-sil/{id}', [CategoryController::class,'deleteCategory'])->name("categories.delete");
+    Route::delete('/kategori-sil', [CategoryController::class, 'deleteSelectedCategories'])->name('categories.delete.selected');
 
     Route::get('/urun-list',[ProductController::class,'showProductList'])->name("products.list");
     Route::post('/urun-list', [ProductController::class,'filterByCategory'])->name("products.filter");
