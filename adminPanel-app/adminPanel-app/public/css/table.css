@@ -1,0 +1,112 @@
+.containerTotal {
+    width: 100%;
+    background-color: #2D43B4;
+    margin: 30px auto;
+    margin-left: 100px;
+    margin-top: 70px;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.containerTable {
+    border-radius: 20px;
+    background-color: white;
+    margin: auto;
+    min-height: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+}
+
+.trCompany {
+    display: grid;
+    grid-template-columns: 20% 40% 20% 10% 10%;
+    text-align: center;
+    border-bottom: 2px solid #2D43B4;
+    align-items: center;
+}
+.trCompany:last-child {
+    border-bottom: none;
+}
+
+.containerUp {
+    background-color: white;
+    display: grid;
+    grid-template-columns: 20% 40% 20% 10% 10%;
+    grid-template-rows: 150px, 150px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.item-th {
+    padding: 15px;
+    text-align: center;
+}
+
+.btn-custom {
+    width: 70px;
+    height: 40px;
+    display: inline-block;
+    text-align: center;
+    line-height: 1.5;
+    margin-left: 10px;
+}
+
+.text-succes {
+    width: 300px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.inputbox {
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: white;
+    width: 300px;
+    height: 40px;
+}
+
+.containerUpKullanici {
+    background-color: white;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.trCompanyKullanici {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    text-align: center;
+    border-bottom: 2px solid #2D43B4;
+    align-items: center;
+    min-height: 50px;
+}
+
+.trCompanyKullanici:last-child {
+    border-bottom: none;
+}
+
+.trCompanyProduct {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+    text-align: center;
+    border-bottom: 2px solid #2D43B4;
+    align-items: center;
+}
+
+
+.trCompanyProduct:last-child {
+    border-bottom: none;
+}
+
+.containerUpProduct {
+    background-color: white;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    border-radius: 20px;
+    margin-bottom: 20px;
+}

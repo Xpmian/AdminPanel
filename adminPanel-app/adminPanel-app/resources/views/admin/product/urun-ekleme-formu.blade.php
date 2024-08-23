@@ -21,17 +21,27 @@
         </div>
     @endif
     <div class="form-container">
-        <form action="{{ route('register.kategori_ekleme_formu') }}" method="POST">
+        <form action="{{ route('registerProduct') }}" method="POST">
             @csrf
-            <label>Kategori Adı :</label>
+            <label>Ürün Adı :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" class="form-control" placeholder="Kategori Adı " name="kategoriAdı">
+                <input type="text" class="form-control" placeholder="Ürün Adı " name="ProductTitle">
             </div>
-            <label>Kategori Açıklaması :</label>
+
+            <label>Ürün Kategori ID :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" class="form-control" placeholder="Kategori Açıklaması" name="kategoriAciklamasi">
+                <select id="number-select" name="ProductCategoryId" class="form-control">
+                    @foreach ($kategoriler as $kategori )
+                        <option value="{{$kategori->id}}">{{$kategori->categoryTitle}}</option>
+                    @endforeach
+                </select>
             </div>
-            <label>Kategori Durumu :</label>
+
+            <label>Barcode :</label>
+            <div class="input-group mb-3 mt-2">
+                <input type="text" class="form-control" placeholder="Ürün Barkodu" name="Barcode">
+            </div>
+            <label>Ürün Durumu :</label>
             <div class="input-group mb-3 mt-2">
                 <select id="number-select" name="status"  class="form-control">
                     <option value="0">Pasif</option>

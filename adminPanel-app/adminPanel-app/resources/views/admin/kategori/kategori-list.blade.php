@@ -1,46 +1,47 @@
 @extends('layouts.admin')
 
 @section('css')
-
+    <link rel="stylesheet" href="{{ asset('css/table.css') }}">
 @endsection
 
 @section('content')
-    <div class="container mt-4">
+    <div class="row">
         @if(session('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success text-succes">
                 {{ session('success') }}
             </div>
         @endif
+        <div class="containerTotal">
 
-        <h2 class="mb-4">Kategoriler</h2>
+            <div class="containerUp">
+                <div class="item-th">Kategori Adı</div>
+                <div class="item-th">Kategori Açıklaması</div>
+                <div class="item-th">Durum</div>
+                <div class="item-th">Düzenle</div>
+                <div class="item-th">Sil</div>
+            </div>
 
-        <form action="{{ route('kullanici_list') }}" method="POST" id="softdelete-form">
-            @csrf
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Kategori Adı</th>
-                        <th>Kullanıcı Açıklaması</th>
-                        <th>Durum</th>
-                        <th>Düzenle</th>
-                        <th>Sil</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($kategoriler as $kategori)
-                        <tr>
-                            <td>{{ $kategori->categoryTitle }}</td>
-                            <td>{{ $kategori->categoryDescription }}</td>
-                            <td>{{ $kategori->status }}</td>
-                            <td><a href="{{ route('show.edit', $kategori->id) }}" class="btn btn-warning btn-sm">Düzenle</a></td>
-                            <td><a href="{{route('kategori_delete_list_show')}}" class="btn btn-danger btn-sm">Sil</a></td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </form>
+            <div class="containerTable" style="overflow-x:auto;">
+                <form id="softdelete-form">
+                    @csrf
+                    <table>
+                        @foreach ($kategoriler as $kategori)
+                            <tr class="trCompany">
+                                <td>{{ $kategori->categoryTitle }}</td>
+                                <td>{{ $kategori->categoryDescription }}</td>
+                                @if ($kategori->status == 1)
+                                    <td>Aktif</td>
+                                @elseif ($kategori->status == 0)
+                                    <td>Pasif</td>
+                                @endif
+                                <td><a href="{{ route('show.edit_kategori', $kategori->id) }}" class="btn btn-warning btn-sm btn-custom">Düzenle</a>
+                                <td><a href="{{ route('kategori_sil',$kategori->id) }}" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </form>
+
+            </div>
+        </div>
     </div>
-
-    @section('js')
-    @endsection
 @endsection

@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Userss extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     protected $guarded = ["id","created_at", "updated_at"];
 }

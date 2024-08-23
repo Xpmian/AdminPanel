@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Userss;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,6 @@ class CategoryController extends Controller
         $kategori_status = $request->input('status');
 
         $category = Category:: where('categoryTitle', $kategori_Adi)->first();
-
         if($category == null)
         {
             $category = new Category();
@@ -38,7 +38,7 @@ class CategoryController extends Controller
             $category->status  = $kategori_status;
             $category->save();
 
-            return redirect()->route('show.kategori_list_show')->with('success', 'Kategori bilgileri başarıyla güncellendi.');
+            return redirect()->route('show.kategori_list_show')->with('success', 'Kategori bilgileri başarıyla eklendi.');
         }
         else
         {
@@ -55,12 +55,70 @@ class CategoryController extends Controller
     public function delete_kategori($id)
     {
         $category = Category::find($id);
-
+        $urun = Product::where('productCategoryId',$id);
         if ($category)
         {
             $category->delete();
             return redirect()->route('show.kategori_list_show')->with('success', 'kategori başarıyla silindi.');
         }
         return redirect()->route('kategori_list_show')->withErrors(['error' => 'Kategori bulunamadı.']);
+    }
+
+    public function show_edit_kategori($id)
+    {
+        $category = Category::find($id);
+        if($category)
+        {
+            return view("admin.kategori.kategori-edit",compact("category"));
+        }
+        return redirect()->route('kullanici_list')->with('error', 'Kullanıcı bulunamadı.');
+    }
+
+    public function edit_kategori($id,Request $request)
+    {
+        $existingKategori = Category:: where('categoryTitle', $request->input('kategoriAdı'))
+                                      ->where('id', '<>', $id)
+                                       ->first();
+        $category = Category::find($id);
+
+        if (!$category)
+        {
+            return redirect()->back()->withErrors(['error' => 'Kategori bulunamadı']);
+        }
+        if(!$existingKategori)
+        {
+            if ($request->filled('kategoriAdı') && $request->filled('kategoriAciklamasi'))
+            {
+                $category->categoryTitle = $request->input('kategoriAdı');
+                $category->categoryDescription = $request->input('kategoriAciklamasi');
+                $category->status = $request->input('status');
+
+                $category->save();
+            }
+            else
+            {
+                return redirect()->back()->withErrors(['error' => 'Boş bırakılamaz']);
+            }
+        }
+        else
+        {
+            return redirect()->back()->withErrors(['error' => 'Bu isme sahip bir kategori mevcut']);
+        }
+        return redirect()->route('show.kategori_list_show')->with('success', 'Kategori bilgileri başarıyla güncellendi.');
+    }
+
+    public function deleteCategorySelect(Request $request)
+    {
+        $categoryIds = $request->input('user_ids');
+
+        if (!$categoryIds)
+        {
+            return redirect()->back()->withErrors(['error' => 'Silinecek kategori seçilmedi.']);
+        }
+
+        // Category::whereIn('id', $categoryIds)->update(['deleted_at' => now()]);
+        Category::whereIn('id', $categoryIds)->delete();
+
+        return redirect()->route('show.kategori_list_show')->with('success', 'Seçilen kategoriler başarıyla silindi.');
     }
 }

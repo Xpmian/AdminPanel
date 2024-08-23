@@ -1,56 +1,47 @@
-* {
-    margin: 0;
-    box-sizing: border-box;
+.form-container {
+    max-width: 600px;
+    max-height: 600px;
+    margin: 0 auto;
+    padding: 50px;
+    background-color: #e5e5e5;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-body {
-    background-color: #d9d9d9;
+.input-group {
+    margin-bottom: 15px;
 }
 
-#loginTitle {
-    font-size: 2rem;
-    text-align: center;
-    font-weight: bold;
-    color: white;
-}
-
-#loginDiv {
-    border-radius: 10px;
-    min-height: 400px;
-    padding: 1.5rem;
-    background: #284b63;
-}
-
-.formGroup {
-    text-align: center;
-    padding: 0.5rem 2rem;
-    margin: 0.5rem;
-}
-
-.formGroup label {
+.btn {
     display: block;
-    text-align: left;
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-
-.formGroup input {
     width: 100%;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 5px;
 }
 
-.btnForm {
+.btn-custom {
+    background-color: #284b63;
+    color: white;
     border: none;
-    border-radius: 5px;
-    padding: 0.8rem 1rem;
-    margin: 0.5rem;
-    background-color: #CCCCCC;
-    font-weight: 600;
+    border-radius: 5px; /* Buton köşelerini yuvarlar */
+    padding: 10px 20px; /* Butonun iç boşluklarını ayarlar */
+    text-align: center; /* Metni ortalar */
+    display: inline-block; /* Butonun satır içi blok olarak görüntülenmesini sağlar */
+    font-size: 16px; /* Yazı boyutunu ayarlar */
+    text-decoration: none; /* Metin altını çizer */
 }
 
-.error-message {
-    color: red;
-    display: none;
+.btn-custom:hover {
+    background-color: #1c3349; /* Butona üzerine gelindiğinde arka plan rengini değiştirir */
+    color: #e0e0e0; /* Üzerine gelindiğinde metin rengini değiştirir */
 }
+
+.btn-custom:active {
+    background-color: #1a2a37; /* Butona tıklanıldığında arka plan rengini değiştirir */
+}
+
+.centered-title {
+    text-align: center;
+    font-weight: 500; /* Daha az kalın */
+    font-size: 2.5em; /* İsteğe bağlı: Boyutu ayarlayabilirsiniz */
+}
+
+

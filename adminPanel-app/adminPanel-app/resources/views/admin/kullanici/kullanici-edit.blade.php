@@ -1,7 +1,12 @@
 @extends('layouts.admin')
 
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/table.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/kullanici-ekleme-formu.css') }}">
+@endsection
+
 @section('content')
-    <h2>Kullanıcıyı Düzenle</h2>
+    <h2 class="centered-title">Kullanıcı Düzenle</h2>
 
     @if(session('success'))
         <div class="alert alert-success">
@@ -18,26 +23,26 @@
             </ul>
         </div>
     @endif
+    <div class="form-container">
+        <form action="{{ route('edit.register', $user->id) }}" method="POST">
+            @csrf
+            @method('PUT')
 
-    <form action="{{ route('edit.register', $user->id) }}" method="POST">
-        @csrf
-        @method('PUT')
+            <label >Kullanıcı Adı :</label>
+            <div class="input-group mb-3 mt-2">
+                <input type="text" name="username" id="username" value="{{ $user->username }}" class="form-control">
+            </div>
 
-        <div class="form-group">
-            <label for="username">Kullanıcı Adı:</label>
-            <input type="text" name="username" id="username" value="{{ $user->username }}" class="form-control">
-        </div>
+            <label>Kullanıcı Title :</label>
+            <div class="input-group mb-3 mt-2">
+                <input type="text" name="userTitle" id="userTitle" value="{{ $user->userTitle }}" class="form-control">
+            </div>
 
-        <div class="form-group">
-            <label for="userTitle">Kullanıcı Title:</label>
-            <input type="text" name="userTitle" id="userTitle" value="{{ $user->userTitle }}" class="form-control">
-        </div>
+            <label>Şifre:</label>
+            <div class="input-group mb-3 mt-2">
+                <input type="text" name="password" id="password" class="form-control">
+            </div>
 
-        <div class="form-group">
-            <label for="password">Şifre:</label>
-            <input type="text" name="password" id="password" class="form-control">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Güncelle</button>
-    </form>
+            <button type="submit" class="btn btn-custom mt-3">Güncelle</button>
+        </form>
 @endsection

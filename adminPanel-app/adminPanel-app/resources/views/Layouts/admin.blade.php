@@ -9,6 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/table.css') }}">
+    @yield('css')
 </head>
 <body>
 
@@ -22,11 +24,10 @@
 
     <div class="row paneller" style="margin:20px">
         <div class="col-2">
-
                 <div class="profile-panel">
                     <div class="list-group " style="display: flex; justify-content: center; align-items: center;">
+                        <img src="{{ asset('img/account.png') }}" id="profileImage" alt="Logo" style="width:70%; margin-left:5px;">
                             <ul style="margin-top: 10%;">
-
                                 <li class="list-group-item dropdown">
                                     <button class="dropbtn" style="border: none;">
                                         <i class="fa-solid fa-user me-1"></i>Admin Kullanıcı Yönetimi
@@ -49,11 +50,11 @@
                                     <button class="dropbtn" style="border: none;">
                                         <i class="fa-solid fa-list me-1"></i>Kategori Yönetimi
                                         <div class="dropdown-content">
-                                            <a style="text-decoration:none;color:black" href="{{route('show.kategori_ekleme_formu')}}">
-                                                Kategori ekleme formu
-                                            </a>
                                             <a style="text-decoration:none;color:black" href="{{route('show.kategori_list_show')}}">
                                                 Kategori listeme formu
+                                            </a>
+                                            <a style="text-decoration:none;color:black" href="{{route('show.kategori_ekleme_formu')}}">
+                                                Kategori ekleme formu
                                             </a>
                                             <a style="text-decoration:none;color:black" href="{{route('kategori_delete_list_show')}}">
                                                 Kategori silme
@@ -66,13 +67,13 @@
                                     <button class="dropbtn" style="border: none;">
                                         <i class="fa-brands fa-dropbox me-1"></i>Ürün Yönetimi
                                         <div class="dropdown-content">
-                                            <a style="text-decoration:none;color:black">
-                                                Ürün ekleme formu
-                                            </a>
-                                            <a style="text-decoration:none;color:black">
+                                            <a style="text-decoration:none;color:black" href="{{route('show.urun_list_show')}}">
                                                 Ürün listeleme sayfası
                                             </a>
-                                            <a style="text-decoration:none;color:black">
+                                            <a style="text-decoration:none;color:black" href="{{route('showProduct')}}">
+                                                Ürün ekleme formu
+                                            </a>
+                                            <a style="text-decoration:none;color:black" href="{{route('urun_delete_list_show')}}">
                                                 Ürün silme
                                             </a>
                                         </div>
@@ -109,5 +110,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
+    <script>
+        setTimeout(function() {
+            var successAlert = document.getElementById('success-alert');
+            if (successAlert) {
+                successAlert.style.display = 'none';
+            }
+        }, 2000);
+    </script>
 </body>
 </html>

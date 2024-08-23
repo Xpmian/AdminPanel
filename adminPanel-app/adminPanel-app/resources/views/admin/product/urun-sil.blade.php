@@ -7,33 +7,36 @@
 @section('content')
     <div class="row">
         @if(session('success'))
-            <div class="alert alert-success text-succes">
+            <div class="alert alert-success text-succes" id="success-alert">
                 {{ session('success') }}
             </div>
         @endif
         <div class="containerTotal">
-            <div class="containerUp">
-                <div class="item-th">Kategori Adı</div>
-                <div class="item-th">Kategori Açıklaması</div>
-                <div class="item-th">Durum</div>
+            <div class="containerUpProduct">
+                <div class="item-th">Ürün Adı</div>
+                <div class="item-th">Ürün Kategori ID</div>
+                <div class="item-th">Ürün Barkodu</div>
+                <div class="item-th">Ürün Durumu</div>
                 <div class="item-th">Sil</div>
             </div>
 
             <div class="containerTable" style="overflow-x:auto;">
-                <form action="{{ route('delete_category_select') }}" method="POST" id="softdelete-form">
+                <form action="{{ route('delete_product_select') }}" method="POST" id="softdelete-form">
                     @csrf
                     @method('DELETE')
                     <table>
-                        @foreach ($kategoriler as $kategori)
-                            <tr class="trCompany">
-                                <td><input type="checkbox" name="user_ids[]" value="{{ $kategori->id }}"></td>
-                                <td>{{ $kategori->categoryTitle }}</td>
-                                <td>{{ $kategori->categoryDescription }}</td>
-                                @if ($kategori->status == 1)
+                        @foreach ($urunler as $urun)
+                            <tr class="trCompanyProduct">
+                                <td><input type="checkbox" name="user_ids[]" value="{{ $urun->id }}"></td>
+                                <td>{{ $urun->productTitle }}</td>
+                                <td>{{ $urun->productCategoryId }}</td>
+                                <td>{{ $urun->barcode }}</td>
+                                @if ($urun->productStatus == 1)
                                     <td>Aktif</td>
-                                @elseif ($kategori->status == 0)
+                                @elseif ($urun->productStatus == 0)
                                     <td>Pasif</td>
                                 @endif
+                                <td><a href="{{ route('urun_sil', $urun->id) }}" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
                             </tr>
                         @endforeach
                     </table>
@@ -53,3 +56,4 @@
     });
 </script>
 @endsection
+

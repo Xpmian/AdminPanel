@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("categoryTitle");
             $table->string("categoryDescription");
             $table->unsignedBigInteger("status")->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
