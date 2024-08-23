@@ -45,7 +45,7 @@ class AdminController extends Controller
     public function show_user_list()
     {
         $users = Userss::all();
-        return view("admin.kullanici-list",compact('users'));
+        return view("admin.kullanici.kullanici-list",compact('users'));
     }
 
     public function show_kullanici_edit($id)
@@ -53,7 +53,7 @@ class AdminController extends Controller
         $user = Userss::find($id);
         if($user)
         {
-            return view("admin.kullanici-edit", compact('user'));
+            return view("admin.kullanici.kullanici-edit", compact('user'));
             //eğer bir form sayfası açmak istiyorsan, bir view döndürmelisin redirect değil!!!!
         }
         else
@@ -83,7 +83,6 @@ class AdminController extends Controller
             }
             $user->save();
         }
-
         else
         {
             return redirect()->back()->withErrors(['error' => 'Bu isme sahip bir kullanıcı mevcut']);
@@ -95,13 +94,13 @@ class AdminController extends Controller
     public function show_delete_list()
     {
         $users = Userss::all();
-        return view("admin.kullanici-sil",compact('users'));
+        return view("admin.kullanici.kullanici-sil",compact('users'));
     }
 
     public function delete_user(Request $request,$id)
     {
-        $array = $request->input('user_ids[]');
-        dd($array);
+        // $array = $request->input('user_ids[]');
+        // dd($array);
         $user = Userss::find($id);
         if ($user)
         {

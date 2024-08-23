@@ -49,10 +49,10 @@
                                     <button class="dropbtn" style="border: none;">
                                         <i class="fa-solid fa-list me-1"></i>Kategori Yönetimi
                                         <div class="dropdown-content">
-                                            <a style="text-decoration:none;color:black">
+                                            <a style="text-decoration:none;color:black" href="{{route('show.kategori_ekleme_formu')}}">
                                                 Kategori ekleme formu
                                             </a>
-                                            <a style="text-decoration:none;color:black">
+                                            <a style="text-decoration:none;color:black" href="{{route('show.kategori_list_show')}}">
                                                 Kategori listeme formu
                                             </a>
                                             <a style="text-decoration:none;color:black">
@@ -80,7 +80,7 @@
 
                                 </li>
                             </ul>
-                        <a id="btnLogoff" style="color: white;float: right;width: 60%;padding: 5px;display:block;margin: 0 auto;background-color: #284b63;border: none;border-radius: 5px;position: absolute;bottom: 3%;text-decoration:none;align-self:center">
+                        <a id="btnLogoff" href="{{route('logoff')}}" style="color: white;float: right;width: 60%;padding: 5px;display:block;margin: 0 auto;background-color: #284b63;border: none;border-radius: 5px;position: absolute;bottom: 3%;text-decoration:none;align-self:center">
                             <i class="fa-solid fa-arrow-right-from-bracket me-3"></i>Çıkış Yap
                         </a>
                     </div>
