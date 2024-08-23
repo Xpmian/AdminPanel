@@ -30,17 +30,17 @@
                 <form id="softdelete-form">
                     @csrf
                     <table>
-                        @foreach ($kategoriler as $kategori)
+                        @foreach ($categories as $category)
                             <tr class="trCompany">
-                                <td>{{ $kategori->categoryTitle }}</td>
-                                <td>{{ $kategori->categoryDescription }}</td>
-                                @if ($kategori->status == 1)
+                                <td>{{ $category->categoryTitle }}</td>
+                                <td>{{ $category->categoryDescription }}</td>
+                                @if ($category->status == 1)
                                 <td style="color: green; font-weight: bold;">Aktif</td>
-                                @elseif ($kategori->status == 0)
+                                @elseif ($category->status == 0)
                                 <td style="color: red; font-weight: bold;">Pasif</td>
                                 @endif
-                                <td><a href="{{ route('show.edit_kategori', $kategori->slug) }}" class="btn btn-warning btn-sm btn-custom">Düzenle</a>
-                                <td><a href="{{ route('kategori_sil',$kategori->id) }}" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
+                                <td><a href="{{ route('show.edit_kategori', $category->slug) }}" class="btn btn-warning btn-sm btn-custom">Düzenle</a>
+                                <td><a href="{{ route('kategori_sil',$category->id) }}" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
                             </tr>
                         @endforeach
                     </table>

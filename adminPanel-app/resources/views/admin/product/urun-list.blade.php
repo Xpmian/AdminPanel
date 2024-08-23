@@ -43,17 +43,17 @@
 
         <div class="containerTotal">
 
-            <form method="POST">
+            <form action="{{route('products.filter')}}" method="POST">
                 @csrf
                 <div class="filter-container">
                     <select id="number-select" name="categoryId" class="form-control">
-                        @foreach ($kategoriler as $kategori )
-                            <option value="{{ $kategori->id }}">{{ $kategori->categoryTitle }}</option>
+                        @foreach ($categories as $categorie )
+                            <option value="{{ $categorie->id }}">{{ $categorie->categoryTitle }}</option>
                         @endforeach
                     </select>
 
                     <button type="submit" class="btn btn-primary" style="background-color: #3d759a">Filtrele</button>
-                    <a href="{{route('show.urun_list_show')}}"  class="btn btn-primary" style="background-color: #3d759a">Hepsini Göster</a>
+                    <a href="{{route('products.list')}}"  class="btn btn-primary" style="background-color: #3d759a">Hepsini Göster</a>
                 </div>
             </form>
 
@@ -73,25 +73,25 @@
                 <form id="softdelete-form">
                     @csrf
                     <table class="formtable" id="productTable">
-                        @foreach ($urunler as $urun)
+                        @foreach ($products as $product)
                             <tr class="trCompanyProduct">
-                                <td>{{ $urun->productTitle }}</td>
-                                @if ($urun->categoryTitle == null)
+                                <td>{{ $product->productTitle }}</td>
+                                @if ($product->categoryTitle == null)
                                     <td>Kategori Silindi</td>
                                 @else
-                                    <td>{{ $urun->categoryTitle }}</td>
+                                    <td>{{ $product->categoryTitle }}</td>
                                 @endif
-                                <td>{{ $urun->barcode }}</td>
-                                @if ($urun->productStatus == 1)
+                                <td>{{ $product->barcode }}</td>
+                                @if ($product->productStatus == 1)
                                     <td style="color: green; font-weight: bold;">Aktif</td>
-                                @elseif ($urun->productStatus == 0)
+                                @elseif ($product->productStatus == 0)
                                     <td style="color: red; font-weight: bold;">Pasif</td>
                                 @endif
-                                <td>{{ $urun->price }}</td>
-                                <td>{{ $urun->stock }}</td>
-                                <td><a href="{{ route('show_image_upload', ['slug' => $urun->slug]) }}" class="btn btn-primary btn-sm btn-custom">Resim</a></td>
-                                <td><a href="{{ route('show.edit_urun', ['slug' => $urun->slug]) }}" class="btn btn-warning btn-sm btn-custom">Düzenle</a></td>
-                                <td><a href="{{ route('urun_sil', $urun->product_id) }}" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
+                                <td>{{ $product->price }}</td>
+                                <td>{{ $product->stock }}</td>
+                                <td><a href="{{ route('products.image.upload.form', ['slug' => $product->slug]) }}" class="btn btn-primary btn-sm btn-custom">Resim</a></td>
+                                <td><a href="{{ route('products.edit.form', ['slug' => $product->slug]) }}" class="btn btn-warning btn-sm btn-custom">Düzenle</a></td>
+                                <td><a href="{{ route('products.delete', $product->product_id) }}" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
                             </tr>
                         @endforeach
                     </table>

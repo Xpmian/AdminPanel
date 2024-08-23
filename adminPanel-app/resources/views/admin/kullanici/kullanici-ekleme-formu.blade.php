@@ -26,11 +26,11 @@
             @csrf
             <label>Kullanıcı Adı :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" class="form-control" placeholder="Kullanıcı Adı" name="username">
+                <input type="text" class="form-control" placeholder="Kullanıcı Adı" name="username" required>
             </div>
             <label>Kullanıcı Title :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" class="form-control" placeholder="Kullanıcı Title" name="userTitle">
+                <input type="text" class="form-control" placeholder="Kullanıcı Title" name="userTitle" required>
             </div>
             <label>Şifre :</label>
             <div class="input-group mb-3 mt-2">

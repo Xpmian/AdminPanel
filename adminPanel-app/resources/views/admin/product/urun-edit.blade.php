@@ -22,20 +22,20 @@
         </div>
     @endif
     <div class="form-container">
-        <form action="{{ route('edit.urun', $urun->id) }}" method="POST">
+        <form action="{{ route('products.update', $product->id) }}" method="POST">
             @csrf
             @method('PUT')
             <label>Ürün Adı :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" name="ProductTitle" id="ProductTitle" value="{{ $urun->productTitle }}" class="form-control">
+                <input type="text" name="ProductTitle" id="ProductTitle" value="{{ $product->productTitle }}" class="form-control" required>
             </div>
 
             <label>Ürün Kategori :</label>
             <div class="input-group mb-3 mt-2">
                 <select id="number-select" name="ProductCategoryId" class="form-control">
-                    @foreach ($kategoriler as $kategori )
-                    <option value="{{ $kategori->id }}" {{ $urun->productCategoryId == $kategori->id ? 'selected' : '' }}>
-                        {{ $kategori->categoryTitle }}
+                    @foreach ($categories as $categorie )
+                    <option value="{{ $categorie->id }}" {{ $product->productCategoryId == $categorie->id ? 'selected' : '' }}>
+                        {{ $categorie->categoryTitle }}
                     </option>
                     @endforeach
                 </select>
@@ -43,27 +43,27 @@
 
             <label>Ürün Barcode :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" name="Barcode" id="Barcode" value="{{ $urun->barcode }}" class="form-control">
+                <input type="number" name="Barcode" id="Barcode" value="{{ $product->barcode }}" class="form-control" required>
             </div>
 
             <label>Ürün Durum :</label>
             <div class="form-block">
                 <div class="input-group mb-3 mt-2">
                     <select id="number-select" name="status" class="form-control">
-                        <option style="color: red; font-weight: bold;" value="0" {{ $urun->productStatus == 0 ? 'selected' : '' }}>Pasif</option>
-                        <option style="color: green; font-weight: bold;" value="1" {{ $urun->productStatus == 1 ? 'selected' : '' }}>Aktif</option>
+                        <option style="color: red; font-weight: bold;" value="0" {{ $product->productStatus == 0 ? 'selected' : '' }}>Pasif</option>
+                        <option style="color: green; font-weight: bold;" value="1" {{ $product->productStatus == 1 ? 'selected' : '' }}>Aktif</option>
                     </select>
                 </div>
             </div>
 
             <label>Ürün Fiyatı :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" name="price" id="price" value="{{ $urun->price }}" class="form-control">
+                <input type="number" name="price" id="price" value="{{ $product->price }}" class="form-control" required>
             </div>
 
             <label>Ürün Stoğu :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" name="stock" id="stock" value="{{ $urun->stock }}" class="form-control">
+                <input type="number" name="stock" id="stock" value="{{ $product->stock }}" class="form-control" required>
             </div>
 
             <button type="submit" class="btn btn-custom">Güncelle</button>
