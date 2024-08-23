@@ -24,7 +24,7 @@
                     <div class="card-body">
                         <h5>Ürün : {{$product->productTitle}}</h5>
                         <hr>
-                        <form action="{{ route('image_upload', $product->slug) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('products.image.upload', $product->slug) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label>Görseli Yükle <span class="warning">(En fazla 20 Görsel)</span></label>
@@ -44,7 +44,7 @@
                 @foreach ($productImages as $productImage)
                     <img src="{{asset($productImage->image)}}" style="width: 100px; height: 100px" alt="img">
 
-                    <a href="{{route('image_delete',$productImage->id)}}">Sil</a>
+                    <a href="{{route('products.image.delete',$productImage->id)}}">Sil</a>
                 @endforeach
             </div>
         </div>

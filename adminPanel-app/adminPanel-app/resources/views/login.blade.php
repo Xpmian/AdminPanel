@@ -34,7 +34,6 @@
 
                     <div class="formGroup">
                         <button type="submit" class="btnForm" id="btnLogin">GİRİŞ YAP</button>
-                        {{-- <button type="submit" class="btnForm" id="btnReg">KAYIT OL</button> --}}
                     </div>
                 </form>
             </div>

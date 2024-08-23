@@ -6,8 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {return view('login');})->name('login');
-
+Route::get('/', function () {return view('login');})->name('login.form');
 Route::post("/", [LoginController::class,'login'])->name("aut.login");
 
 Route::prefix("/admin")->group(function ()
@@ -21,27 +20,27 @@ Route::prefix("/admin")->group(function ()
     Route::get('/kullanici-sil/{id}', [AdminController::class,'delete_user'])->name("kullanici_sil");
     Route::delete('/kullanici-sil', [AdminController::class, 'deleteUserSelect'])->name('delete_user_select');
 
-    Route::get('/kategori-list',[CategoryController::class,'kategori_list_show'])->name("show.kategori_list_show");
-    Route::get('/kategori-ekleme-formu',[CategoryController::class,'kategori_ekleme_show'])->name("show.kategori_ekleme_formu");
-    Route::post('/kategori-ekleme-formu',[CategoryController::class,'kategori_ekleme_register'])->name("register.kategori_ekleme_formu");
-    Route::get('/kategori-edit/{slug}', [CategoryController::class,'show_edit_kategori'])->name("show.edit_kategori");
+    Route::get('/kategori-list',[CategoryController::class,'showCategoryList'])->name("show.kategori_list_show");
+    Route::get('/kategori-ekleme-formu',[CategoryController::class,'showCategoryCreateForm'])->name("show.kategori_ekleme_formu");
+    Route::post('/kategori-ekleme-formu',[CategoryController::class,'registerCategory'])->name("register.kategori_ekleme_formu");
+    Route::get('/kategori-edit/{slug}', [CategoryController::class,'showCategoryEditForm'])->name("show.edit_kategori");
     Route::put('/kategori-edit/{id}', [CategoryController::class, 'edit_kategori'])->name('edit.kategori');
-    Route::get('/kategori-sil',[CategoryController::class,'show_kategori_delete_list'])->name("kategori_delete_list_show");
-    Route::get('/kategori-sil/{id}', [CategoryController::class,'delete_kategori'])->name("kategori_sil");
-    Route::delete('/kategori-sil', [CategoryController::class, 'deleteCategorySelect'])->name('delete_category_select');
+    Route::get('/kategori-sil',[CategoryController::class,'showCategoryDeleteList'])->name("kategori_delete_list_show");
+    Route::get('/kategori-sil/{id}', [CategoryController::class,'deleteCategory'])->name("kategori_sil");
+    Route::delete('/kategori-sil', [CategoryController::class, 'deleteSelectedCategories'])->name('delete_category_select');
 
-    Route::get('/urun-list',[ProductController::class,'urun_list_show'])->name("show.urun_list_show");
-    Route::post('/urun-list', [ProductController::class,'filter_category'])->name("filter_category");
-    Route::get('/urun-ekleme-formu', [ProductController::class,'showProductRegister'])->name("showProduct");
-    Route::post('/urun-ekleme-formu',[ProductController::class,'register_product'])->name("registerProduct");
-    Route::get('/urun-edit/{slug}', [ProductController::class,'show_edit_urun'])->name("show.edit_urun");
-    Route::put('/urun-edit/{id}', [ProductController::class, 'edit_urun'])->name('edit.urun');
-    Route::get('/urun-sil',[ProductController::class,'show_urun_delete_list'])->name("urun_delete_list_show");
-    Route::get('/urun-sil/{id}', [ProductController::class,'delete_urun'])->name("urun_sil");
-    Route::delete('/urun-sil', [ProductController::class, 'deleteProductSelect'])->name('delete_product_select');
-    Route::get('/urun-image/{slug}', [ProductController::class, 'show_image_upload'])->name('show_image_upload');
-    Route::post('/urun-image/{slug}', [ProductController::class, 'image_upload'])->name('image_upload');
-    Route::get('/urun-image/{id}/sil', [ProductController::class, 'image_delete'])->name('image_delete');
+    Route::get('/urun-list',[ProductController::class,'showProductList'])->name("products.list");
+    Route::post('/urun-list', [ProductController::class,'filterByCategory'])->name("products.filter");
+    Route::get('/urun-ekleme-formu', [ProductController::class,'showProductRegisterForm'])->name("products.create.form");
+    Route::post('/urun-ekleme-formu',[ProductController::class,'registerProduct'])->name("products.create");
+    Route::get('/urun-edit/{slug}', [ProductController::class,'showProductEdit'])->name("products.edit.form");
+    Route::put('/urun-edit/{id}', [ProductController::class, 'updateProduct'])->name('products.update');
+    Route::get('/urun-sil',[ProductController::class,'showProductDeleteList'])->name("products.delete.list");
+    Route::get('/urun-sil/{id}', [ProductController::class,'deleteProduct'])->name("products.delete");
+    Route::delete('/urun-sil', [ProductController::class, 'deleteSelectedProducts'])->name('products.delete.selected');
+    Route::get('/urun-image/{slug}', [ProductController::class, 'showImageUpload'])->name('products.image.upload.form');
+    Route::post('/urun-image/{slug}', [ProductController::class, 'uploadImage'])->name('products.image.upload');
+    Route::get('/urun-image/{id}/sil', [ProductController::class, 'deleteImage'])->name('products.image.delete');
 });
 
 

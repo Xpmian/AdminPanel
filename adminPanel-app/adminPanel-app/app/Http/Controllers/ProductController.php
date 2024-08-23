@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImages;
-use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -20,162 +19,134 @@ class ProductController extends Controller
         return $slug;
     }
 
-    public function urun_list_show()
+    public function showProductList()
     {
-        $urunler = DB::table('product_category_view')->orderBy('productTitle', 'asc')
-                                                     ->get();
+        $products = DB::table('product_category_view')->whereNull('deleted_at')
+                                                      ->orderBy('productTitle', 'asc')
+                                                      ->get();
+        $categories = Category::all();
 
-        $kategoriler = Category::all();
-
-        return view('admin.product.urun-list',compact('urunler','kategoriler'));
+        return view('admin.product.urun-list', compact('products', 'categories'));
     }
 
-    public function filter_category(Request $request)
+    public function filterByCategory(Request $request)
     {
-        $kategori_id = $request->input('categoryId');
+        $categoryId = $request->input('categoryId');
 
-        $urunler = DB::table('product_category_view')
-                    ->where('category_id', $kategori_id)
-                    ->orderBy('productTitle', 'asc')
-                    ->get();
+        $products = DB::table('product_category_view')
+                            ->where('category_id', $categoryId)
+                            ->orderBy('productTitle', 'asc')
+                            ->get();
 
-        $kategoriler = Category::all();
+        $categories = Category::all();
 
-        return view('admin.product.urun-list', compact('urunler', 'kategoriler'))->with('success', 'Kategori bilgileri başarıyla Filtrenlendi.');
+        return view('admin.product.urun-list', compact('products', 'categories'))->with('success', 'Kategori bilgileri başarıyla filtrelendi.');
     }
 
-    public function showProductRegister()
+    public function showProductRegisterForm()
     {
-        $kategoriler = Category::where('status',1)->get();
+        $categories = Category::all();
 
-        return view('admin.product.urun-ekleme-formu',['kategoriler' => $kategoriler]);
+        return view('admin.product.urun-ekleme-formu', ['categories' => $categories]);
     }
 
-    public function register_product(Request $request)
+    public function registerProduct(Request $request)
     {
-        $urun_adi = $request->input('ProductTitle');
-        $urun_kategori_id = $request->input('ProductCategoryId');
-        $barkod = $request->input('Barcode');
-        $durum = $request->input('Status');
-        $fiyat = $request->input('Price');
-        $stok = $request->input('Stock');
+        $existingProduct = Product::where('barcode', $request->input('Barcode'))->first();
 
-        $product_barcode = Product::where('barcode',$barkod)->first();
-
-        if(!$product_barcode)
+        if (!$existingProduct)
         {
             $product = new Product();
-            $product->productTitle = $urun_adi;
-            $product->productCategoryId = $urun_kategori_id;
-            $product->barcode = $barkod;
-            $product->productStatus = $durum;
-            $product->price = $fiyat;
-            $product->stock = $stok;
+            $product->productTitle = $request->input('ProductTitle');
+            $product->productCategoryId = $request->input('ProductCategoryId');
+            $product->barcode = $request->input('Barcode');
+            $product->productStatus = $request->input('Status');
+            $product->price = $request->input('Price');
+            $product->stock = $request->input('Stock');
             $product->save();
 
-            $product->slug = $this->createSlug($urun_adi, $product->id);
+            $product->slug = $this->createSlug($request->input('ProductTitle'), $product->id);
             $product->save();
 
-            return redirect()->route('show.urun_list_show')->with('success', 'Ürün başarıyla eklendi.');
-        }
-        else
-        {
-            return redirect()->route('show.urun_list_show')->with('error', 'Bu barkod numarasına bir sahip ürün var.');
-        }
-    }
-
-    public function show_edit_urun($slug)
-    {
-        $urun = Product::where('slug',$slug)->first();
-        $kategoriler = Category::all();
-
-        if($urun)
-        {
-            return view('admin.product.urun-edit',compact('urun','kategoriler'));
-        }
-        else
-        {
-            abort(404, 'Kategori bulunamadı.');
-            // return redirect()->route('show.urun_list_show')->with('error', 'Ürün bulunamadı.');
-        }
-    }
-
-    public function edit_urun(Request $request ,$id)
-    {
-        $urunStatus = $request->input('status');
-        $categoryId = $request->input('ProductCategoryId');
-        $barcode = $request->input('Barcode');
-
-        $urun = Product::find($id);
-        $existingUser = Product::where('barcode', $barcode)
-                       ->where('id', '<>', $id)
-                       ->first();
-
-        if(!$urun)
-        {
-            abort(404, 'Ürün bulunamadı.');
-            // return redirect()->back()->withErrors(['error' => 'Ürün bulunamadı']);
-        }
-        else if($existingUser)
-        {
-            return redirect()->back()->withErrors(['error' => 'Bu barkod numarasın sahip bir ürün var!']);
-        }
-        else
-        {
-            if($request->filled('ProductTitle') && $request->filled('Barcode') && $request->filled('price') && $request->filled('stock'))
+            if ($request->input('Status') == 1)
             {
-                $urun->productTitle = $request->input('ProductTitle');
-                $urun->productCategoryId = $categoryId;
-                $urun->barcode = $request->input('Barcode');
-                $urun->productStatus = $request->input('status');
-                $urun->price = $request->input('price');
-                $urun->stock = $request->input('stock');
-                $urun->slug = $this->createSlug($request->input('ProductTitle'),$id);
-                $urun->save();
+                $category = Category::where('id', $request->input('ProductCategoryId'))->first();
+                $category->status = 1;
 
-                if($urunStatus == 1)
-                {
-                    $kategori = Category::where('id',$categoryId)->first();
+                $category->save();
+            }
 
-                    $kategori->status = 1;
-                    $kategori->save();
-                }
-            }
-            else
-            {
-                return redirect()->back()->withErrors(['error' => 'Boş bırakılamaz']);
-            }
+            return redirect()->route('products.list')->with('success', 'Ürün başarıyla eklendi.');
         }
 
-        return redirect()->route('show.urun_list_show')->with('success', 'Ürün bilgileri başarıyla güncellendi.');
-    }
-
-    public function show_urun_delete_list()
-    {
-        $urunler = DB::table('product_category_view')->orderBy('productTitle', 'asc')
-                                                     ->get();
-
-        return view('admin.product.urun-sil',compact('urunler'));
-    }
-
-    public function delete_urun($id)
-    {
-        $urun = Product::find($id);
-
-        if ($urun)
+        else
         {
-            $urun->delete();
-
-            return redirect()->route('show.urun_list_show')->with('success', 'Ürün başarıyla silindi.');
+            return redirect()->route('products.create.form')->with('error', 'Bu barkod numarasına sahip bir ürün zaten var.');
         }
-
-        return redirect()->route('show.urun_list_show')->withErrors(['error' => 'Ürün bulunamadı.']);
     }
 
-    public function deleteProductSelect(Request $request)
+    public function showProductEdit($slug)
+    {
+        $product = Product::where('slug', $slug)->firstOrFail();
+        $categories = Category::all();
+
+        return view('admin.product.urun-edit', compact('product', 'categories'));
+    }
+
+    public function updateProduct(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $existingProduct = Product::where('barcode', $request->input('Barcode'))
+                                   ->where('id', '<>', $id)
+                                   ->first();
+
+        if ($existingProduct)
+        {
+            return redirect()->back()->withErrors(['error' => 'Bu barkod numarasına sahip bir ürün var!']);
+        }
+        else
+        {
+            $product->productTitle = $request->input('ProductTitle');
+            $product->productCategoryId = $request->input('ProductCategoryId');
+            $product->barcode = $request->input('Barcode');
+            $product->productStatus = $request->input('status');
+            $product->price = $request->input('price');
+            $product->stock = $request->input('stock');
+            $product->slug = $this->createSlug($request->input('ProductTitle'), $id);
+            $product->save();
+
+            if ($request->input('status') == 1)
+            {
+                $category = Category::where('id', $request->input('ProductCategoryId'))->first();
+                $category->status = 1;
+
+                $category->save();
+            }
+
+            return redirect()->route('products.list')->with('success', 'Ürün bilgileri başarıyla güncellendi.');
+        }
+    }
+
+    public function showProductDeleteList()
+    {
+        $products = DB::table('product_category_view')->orderBy('productTitle', 'asc')
+                                                      ->get();
+
+        return view('admin.product.urun-sil',compact('products'));
+    }
+
+    public function deleteProduct($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return redirect()->route('products.list')->with('success', 'Ürün başarıyla silindi.');
+
+    }
+
+    public function deleteSelectedProducts(Request $request)
     {
         $productIds = $request->input('user_ids');
-
         if (!$productIds)
         {
             return redirect()->back()->withErrors(['error' => 'Silinecek ürün seçilmedi.']);
@@ -183,62 +154,62 @@ class ProductController extends Controller
 
         Product::whereIn('id', $productIds)->delete();
 
-        return redirect()->route('show.urun_list_show')->with('success', 'Seçilen ürünler başarıyla silindi.');
+        return redirect()->route('products.list')->with('success', 'Seçilen ürünler başarıyla silindi.');
     }
 
-    public function show_image_upload($slug)
+    public function showImageUpload($slug)
     {
-        $product = Product::where('slug',$slug)->first();
-        $productImages = ProductImages::where('slug',$slug)->get();
+        $product = Product::where('slug', $slug)->first();
+        $productImages = ProductImages::where('slug', $slug)->get();
 
-        return view('admin.product.urun-image',compact('product','productImages'));
+        return view('admin.product.urun-image', compact('product', 'productImages'));
     }
 
-    public function image_upload(Request $request,$slug)
+    public function uploadImage(Request $request, $slug)
     {
         $request->validate([
             'images.*' => 'required|image|mimes:png,jpg,jpeg,webp'
         ]);
 
-        $product = Product::where('slug',$slug)->firstOrFail();
+        $product = Product::where('slug', $slug)->firstOrFail();
 
         $imageData = [];
         $files = $request->file('images');
 
-        if($files)
+        if ($files)
         {
-            foreach($files as $key => $file)
+            foreach ($files as $key => $file)
             {
                 $extension = $file->getClientOriginalExtension();
-                $fileName = $key. '-' .time(). '-' .$extension;
-
+                $fileName = $key . '-' . time() . '-' . $extension;
                 $path = "uploads/products/";
                 $file->move($path, $fileName);
 
                 $imageData[] = [
                     'product_id' => $product->id,
                     'slug' => $product->slug,
-                    'image' => $path.$fileName
+                    'image' => $path . $fileName
                 ];
             }
         }
+
         ProductImages::insert($imageData);
 
-        return redirect()->route('image_upload',$slug)->with('success', 'Görsel başarıyla yüklendi.');
+        return redirect()->route('products.image.upload', $slug)->with('success', 'Görsel başarıyla yüklendi.');
     }
 
-    public function image_delete($id)
+    public function deleteImage($id)
     {
         $productImage = ProductImages::find($id);
         $slug = $productImage->slug;
 
-        if(File::exists($productImage->image))
+        if (File::exists($productImage->image))
         {
             File::delete($productImage->image);
         }
 
         $productImage->delete();
 
-        return redirect()->route('image_upload',$slug)->with('success', 'Görsel başarıyla Silindi.');
+        return redirect()->route('products.image.upload', $slug)->with('success', 'Görsel başarıyla silindi.');
     }
 }

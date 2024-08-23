@@ -75,13 +75,13 @@
                                     <button class="dropbtn" style="border: none;">
                                         <i class="fa-brands fa-dropbox me-1"></i>Ürün Yönetimi
                                         <div class="dropdown-content">
-                                            <a style="text-decoration:none;color:black" href="{{route('show.urun_list_show')}}">
+                                            <a style="text-decoration:none;color:black" href="{{route('products.list')}}">
                                                 Ürün listeleme sayfası
                                             </a>
-                                            <a style="text-decoration:none;color:black" href="{{route('showProduct')}}">
+                                            <a style="text-decoration:none;color:black" href="{{route('products.create.form')}}">
                                                 Ürün ekleme formu
                                             </a>
-                                            <a style="text-decoration:none;color:black" href="{{route('urun_delete_list_show')}}">
+                                            <a style="text-decoration:none;color:black" href="{{route('products.delete.list')}}">
                                                 Ürün silme
                                             </a>
                                         </div>
@@ -89,7 +89,7 @@
 
                                 </li>
                             </ul>
-                        <a id="btnLogoff" href="{{route('login')}}" style="color: white;float: right;width: 60%;padding: 5px;display:block;margin: 0 auto;background-color: #284b63;border: none;border-radius: 5px;position: absolute;bottom: 3%;text-decoration:none;align-self:center">
+                        <a id="btnLogoff" href="{{route('login.form')}}" style="color: white;float: right;width: 60%;padding: 5px;display:block;margin: 0 auto;background-color: #284b63;border: none;border-radius: 5px;position: absolute;bottom: 3%;text-decoration:none;align-self:center">
                             <i class="fa-solid fa-arrow-right-from-bracket me-3"></i>Çıkış Yap
                         </a>
                     </div>
