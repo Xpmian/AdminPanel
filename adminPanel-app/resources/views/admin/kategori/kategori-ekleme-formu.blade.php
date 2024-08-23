@@ -25,11 +25,11 @@
             @csrf
             <label>Kategori Adı :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" class="form-control" placeholder="Kategori Adı " name="kategoriAdı">
+                <input type="text" class="form-control" placeholder="Kategori Adı " name="kategoriAdı" required>
             </div>
             <label>Kategori Açıklaması :</label>
             <div class="input-group mb-3 mt-2">
-                <input type="text" class="form-control" placeholder="Kategori Açıklaması" name="kategoriAciklamasi">
+                <input type="text" class="form-control" placeholder="Kategori Açıklaması" name="kategoriAciklamasi" required>
             </div>
             <label>Kategori Durumu :</label>
             <div class="input-group mb-3 mt-2">

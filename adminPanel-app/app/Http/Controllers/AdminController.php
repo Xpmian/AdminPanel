@@ -60,16 +60,16 @@ class AdminController extends Controller
 
     public function show_kullanici_edit($slug)
     {
-        $user = Userss::where('slug',$slug)->first();
+        $user = Userss::where('slug', $slug)->first();
 
-        if($user)
+        if ($user)
         {
             return view("admin.kullanici.kullanici-edit", compact('user'));
-            //eğer bir form sayfası açmak istiyorsan, bir view döndürmelisin redirect değil!!!!
         }
         else
         {
-            return redirect()->route('kullanici_list')->with('error', 'Kullanıcı bulunamadı.');
+            // return redirect()->route('kullanici_list')->with('error', 'Kullanıcı bulunamadı.');
+            abort(404, 'Kullanıcı bulunamadı.');
         }
     }
 
@@ -83,7 +83,8 @@ class AdminController extends Controller
 
         if (!$user)
         {
-            return redirect()->back()->withErrors(['error' => 'Kullanıcı bulunamadı']);
+            abort(404, 'Kullanıcı bulunamadı.');
+            // return redirect()->back()->withErrors(['error' => 'Kullanıcı bulunamadı']);
         }
 
         if(!$existingUser)
@@ -142,7 +143,9 @@ class AdminController extends Controller
 
             return redirect()->route('kullanici_list')->with('success', 'Kullanıcı başarıyla silindi.');
         }
-        return redirect()->route('kullanici_list')->withErrors(['error' => 'Kullanıcı bulunamadı.']);
+
+        // return redirect()->route('kullanici_list')->withErrors(['error' => 'Kullanıcı bulunamadı.']);
+        abort(404, 'Kullanıcı bulunamadı.');
     }
 
     public function deleteUserSelect(Request $request)

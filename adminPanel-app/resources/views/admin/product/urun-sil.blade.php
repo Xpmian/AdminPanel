@@ -24,24 +24,24 @@
             </div>
 
             <div class="containerTable" style="overflow-x:auto;">
-                <form action="{{ route('delete_product_select') }}" method="POST" id="softdelete-form">
+                <form action="{{ route('products.delete.selected') }}" method="POST" id="softdelete-form">
                     @csrf
                     @method('DELETE')
                     <table class="formtable">
-                        @foreach ($urunler as $urun)
+                        @foreach ($products as $product)
                             <tr class="trCompanyProductDelete">
-                                <td><input type="checkbox" name="user_ids[]" value="{{ $urun->id }}"></td>
-                                <td>{{ $urun->productTitle }}</td>
-                                <td>{{ $urun->categoryTitle }}</td>
-                                <td>{{ $urun->barcode }}</td>
-                                @if ($urun->productStatus == 1)
+                                <td><input type="checkbox" name="user_ids[]" value="{{ $product->product_id }}"></td>
+                                <td>{{ $product->productTitle }}</td>
+                                <td>{{ $product->categoryTitle }}</td>
+                                <td>{{ $product->barcode }}</td>
+                                @if ($product->productStatus == 1)
                                     <td style="color: green; font-weight: bold;">Aktif</td>
-                                @elseif ($urun->productStatus == 0)
+                                @elseif ($product->productStatus == 0)
                                     <td style="color: red; font-weight: bold;">Pasif</td>
                                 @endif
-                                <td>{{ $urun->price }}</td>
-                                <td>{{ $urun->stock }}</td>
-                                <td><a href="{{ route('urun_sil', $urun->id) }}" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
+                                <td>{{ $product->price }}</td>
+                                <td>{{ $product->stock }}</td>
+                                <td><a href="{{ route('products.delete', $product->product_id) }}" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
                             </tr>
                         @endforeach
                     </table>
