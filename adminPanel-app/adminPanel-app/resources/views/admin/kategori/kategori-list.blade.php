@@ -14,7 +14,7 @@
 
         <h2 class="mb-4">Kategoriler</h2>
 
-        <form action="{{ route('show.kategori_list_show') }}" method="POST" id="softdelete-form">
+        <form action="{{ route('kullanici_list') }}" method="POST" id="softdelete-form">
             @csrf
             <table class="table table-bordered">
                 <thead>
@@ -32,7 +32,7 @@
                             <td>{{ $kategori->categoryTitle }}</td>
                             <td>{{ $kategori->categoryDescription }}</td>
                             <td>{{ $kategori->status }}</td>
-                            <td><a href="{{ route('show.edit_kategori', $kategori->id) }}" class="btn btn-warning btn-sm">Düzenle</a></td>
+                            <td><a href="{{ route('show.edit', $kategori->id) }}" class="btn btn-warning btn-sm">Düzenle</a></td>
                             <td><a href="{{route('kategori_delete_list_show')}}" class="btn btn-danger btn-sm">Sil</a></td>
                         </tr>
                     @endforeach
