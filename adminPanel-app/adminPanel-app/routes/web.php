@@ -26,10 +26,6 @@ Route::prefix("/admin")->group(function ()
     Route::get('/kategori-list',[CategoryController::class,'kategori_list_show'])->name("show.kategori_list_show");
     Route::get('/kategori-sil',[CategoryController::class,'show_kategori_delete_list'])->name("kategori_delete_list_show");
     Route::get('/kategori-sil/{id}', [CategoryController::class,'delete_kategori'])->name("kategori_sil");
-    Route::get('/kategori-edit/{id}', [CategoryController::class,'show_edit_kategori'])->name("show.edit_kategori");
-    Route::put('/kategori-edit/{id}', [CategoryController::class, 'edit_kategori'])->name('edit.kategori');
-
-
 
 
 
