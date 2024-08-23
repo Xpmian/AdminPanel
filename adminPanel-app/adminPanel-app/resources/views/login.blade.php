@@ -13,7 +13,11 @@
         <div class="row justify-content-around align-items-center" style="height: 100%;">
             <div class="col-xs-12 col-lg-6" id="loginDiv">
                 <h2 id="loginTitle">Giriş Ekranı</h2>
-
+                @if(session('success'))
+                    <div class="alert alert-success text-succes" id="success-alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         {{ $errors->first('login_error') }}
@@ -49,5 +53,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+
+    <script>
+        let alerts = document.getElementsByClassName('alert');
+
+        setTimeout(function() {
+            for(let i = 0; i < alerts.length; i++) {
+                    alerts[i].style.display = 'none';
+            }
+        }, 1500);
+    </script>
 </body>
 </html>

@@ -13,41 +13,35 @@ class AdminController extends Controller
 {
     public function createSlug($string)
     {
+        $turkishChars = array('ş', 'ı', 'İ', 'ğ', 'ü', 'ç', 'ö', 'Ş', 'Ğ', 'Ü', 'Ç', 'Ö');
+        $englishChars = array('s', 'i', 'i', 'g', 'u', 'c', 'o', 's', 'g', 'u', 'c', 'o');
+
+        $string = str_replace($turkishChars, $englishChars, $string);
+
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string)));
 
         return $slug;
     }
 
-    public function show_user_list()
+    public function showUserList()
     {
         $users = Userss::orderBy('username', 'asc')->get();
 
         return view("admin.kullanici.kullanici-list",compact('users'));
     }
 
-    public function register_user(Request $request)
+    public function registerUser(Request $request)
     {
-        // $request->validate([
-        //      'userName' => 'required|alpha_num',
-        //      'userTitle' => 'required|string',
-        //      'password' => 'required|string|min:6',
-        // ]);
+        $user = Userss:: where('username', $request->input('username'))->first();
 
-        $name = $request->input('username');
-        $userTitle = $request->input('userTitle');
-        $password = $request->input('password');
-        $slug = $this->createSlug($name);
-
-        $user = Userss:: where('username', $name)->first();
-
-        if($user == null)
+        if(!$user)
         {
             $user = new Userss();
 
-            $user->username = $name;
-            $user->userTitle = $userTitle;
-            $user->password = bcrypt($password);
-            $user->slug = $slug;
+            $user->username = $request->input('username');
+            $user->userTitle = $request->input('userTitle');
+            $user->password = bcrypt($request->input('password'));
+            $user->slug = $this->createSlug($request->input('username'));
             $user->save();
 
             return redirect()->intended('/admin/kullanici-list');
@@ -58,44 +52,31 @@ class AdminController extends Controller
         }
     }
 
-    public function show_kullanici_edit($slug)
+    public function showUsersCreateForm()
     {
-        $user = Userss::where('slug', $slug)->first();
-
-        if ($user)
-        {
-            return view("admin.kullanici.kullanici-edit", compact('user'));
-        }
-        else
-        {
-            // return redirect()->route('kullanici_list')->with('error', 'Kullanıcı bulunamadı.');
-            abort(404, 'Kullanıcı bulunamadı.');
-        }
+        return view('admin.kullanici.kullanici-ekleme-formu');
     }
 
-    public function register_kullanici_edit(Request $request, $id)
+    public function showUserEditForm($slug)
     {
-        $existingUser = Userss::where('username', $request->input('username'))
+        $user = Userss::where('slug', $slug)->firstOrFail();
+
+        return view("admin.kullanici.kullanici-edit", compact('user'));
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        $existingUser = Userss::withTrashed()
+                       ->where('username', $request->input('username'))
                        ->where('id', '<>', $id)
                        ->first();
 
-        $user = Userss::find($id);
-
-        if (!$user)
-        {
-            abort(404, 'Kullanıcı bulunamadı.');
-            // return redirect()->back()->withErrors(['error' => 'Kullanıcı bulunamadı']);
-        }
+        $user = Userss::findOrFail($id);
 
         if(!$existingUser)
         {
             $user->username = $request->input('username');
             $user->userTitle = $request->input('userTitle');
-
-            if(!($request->filled('username')) || !($request->filled('userTitle')))
-            {
-                return redirect()->back()->withErrors(['error' => 'Boş bırakılamaz']);
-            }
 
             if ($request->filled('password'))
             {
@@ -117,38 +98,41 @@ class AdminController extends Controller
             }
 
             $user->save();
+
+            return redirect()->route('users.list')->with('success', 'Kullanıcı bilgileri başarıyla güncellendi.');
         }
         else
         {
             return redirect()->back()->withErrors(['error' => 'Bu isme sahip bir kullanıcı mevcut']);
         }
-
-        return redirect()->route('kullanici_list')->with('success', 'Kullanıcı bilgileri başarıyla güncellendi.');
     }
 
 
-    public function show_delete_list()
+    public function showUserDeleteList()
     {
-        $users = Userss::orderBy('username', 'asc')->get();
+        $users = Userss::orderBy('username','asc')->get();
 
         return view("admin.kullanici.kullanici-sil",compact('users'));
     }
 
-    public function delete_user(Request $request,$id)
+    public function deleteUser(Request $request,$id)
     {
-        $user = Userss::find($id);
-        if ($user)
+        $user = Userss::findOrFail($id);
+
+        if($user->username == session('username'))
         {
+            session()->flush();
             $user->delete();
 
-            return redirect()->route('kullanici_list')->with('success', 'Kullanıcı başarıyla silindi.');
+            return redirect()->route('login.form')->with('success', 'Başarıyla çıkış yapıldı.');
         }
 
-        // return redirect()->route('kullanici_list')->withErrors(['error' => 'Kullanıcı bulunamadı.']);
-        abort(404, 'Kullanıcı bulunamadı.');
+        $user->delete();
+
+        return redirect()->route('users.list')->with('success', 'Kullanıcı başarıyla silindi.');
     }
 
-    public function deleteUserSelect(Request $request)
+    public function deleteSelectedUsers(Request $request)
     {
         $userIds = $request->input('user_ids');
 
@@ -156,8 +140,9 @@ class AdminController extends Controller
         {
             return redirect()->back()->withErrors(['error' => 'Silinecek kullanıcı seçilmedi.']);
         }
+
         Userss::whereIn('id', $userIds)->update(['deleted_at' => now()]);
 
-        return redirect()->route('kullanici_list')->with('success', 'Seçilen kullanıcılar başarıyla silindi.');
+        return redirect()->route('users.delete.list')->with('success', 'Seçilen kullanıcılar başarıyla silindi.');
     }
 }

@@ -22,7 +22,7 @@
     @endif
 
     <div class="form-container">
-        <form action="{{ route('register') }}" method="POST">
+        <form action="{{ route('users.create') }}" method="POST">
             @csrf
             <label>Kullanıcı Adı :</label>
             <div class="input-group mb-3 mt-2">
