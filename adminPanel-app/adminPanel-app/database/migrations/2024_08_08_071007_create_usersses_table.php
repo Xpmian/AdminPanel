@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("username")->unique();
             $table->string("userTitle");
             $table->string("password");
+            $table->string('slug')->unique();
             $table->softDeletes();
             $table->timestamps();
         });

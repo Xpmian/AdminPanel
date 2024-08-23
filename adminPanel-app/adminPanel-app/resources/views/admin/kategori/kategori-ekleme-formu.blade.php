@@ -34,8 +34,8 @@
             <label>Kategori Durumu :</label>
             <div class="input-group mb-3 mt-2">
                 <select id="number-select" name="status"  class="form-control">
-                    <option value="0">Pasif</option>
-                    <option value="1">Aktif</option>
+                    <option value="0" style="color: red; font-weight: bold;">Pasif</option>
+                    <option value="1" style="color: green; font-weight: bold;">Aktif</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-custom mt-3">Kaydet</button>

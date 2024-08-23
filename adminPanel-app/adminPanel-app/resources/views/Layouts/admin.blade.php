@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Paneli</title>
+    <title >Admin Paneli</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -26,11 +26,19 @@
         <div class="col-2">
                 <div class="profile-panel">
                     <div class="list-group " style="display: flex; justify-content: center; align-items: center;">
-                        <img src="{{ asset('img/account.png') }}" id="profileImage" alt="Logo" style="width:70%; margin-left:5px;">
-                            <ul style="margin-top: 10%;">
+                        <a href="{{ route('show.edit', session('slug')) }}">
+                            <img src="{{ asset('img/account.png') }}" id="profileImage" alt="Logo" style="width:70%; margin-left:30px;">
+                        </a>
+                        @if(session('userTitle'))
+                            <p class="mt-1" style="font-weight: bold; font-size: 1.25rem;">
+                                {{ session('userTitle') }}
+                            </p>
+                        @endif
+                        <p></p>
+                            <ul style="margin-top: 0.75%;">
                                 <li class="list-group-item dropdown">
                                     <button class="dropbtn" style="border: none;">
-                                        <i class="fa-solid fa-user me-1"></i>Admin Kullanıcı Yönetimi
+                                        <i class="fa-solid fa-user me-1 "></i>Admin Kullanıcı Yönetimi
                                         <div class="dropdown-content">
                                             <a style="text-decoration:none;color:black" href="{{route('kullanici_list')}}">
                                                 Kullanıcı Listeleme Sayfası
@@ -81,7 +89,7 @@
 
                                 </li>
                             </ul>
-                        <a id="btnLogoff" href="{{route('logoff')}}" style="color: white;float: right;width: 60%;padding: 5px;display:block;margin: 0 auto;background-color: #284b63;border: none;border-radius: 5px;position: absolute;bottom: 3%;text-decoration:none;align-self:center">
+                        <a id="btnLogoff" href="{{route('login')}}" style="color: white;float: right;width: 60%;padding: 5px;display:block;margin: 0 auto;background-color: #284b63;border: none;border-radius: 5px;position: absolute;bottom: 3%;text-decoration:none;align-self:center">
                             <i class="fa-solid fa-arrow-right-from-bracket me-3"></i>Çıkış Yap
                         </a>
                     </div>
@@ -91,11 +99,11 @@
 
         <div class="col-lg-10 col-xs-12 col-md-12">
             <div class="panel-right" style="position:relative;">
-                <div class="col-10">
+                <div>
                     <div class="content">
                         @yield('content')
                     </div>
-                </div>
+                </div>
             </div>
         </div>
 
@@ -110,13 +118,20 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
-    <script>
-        setTimeout(function() {
-            var successAlert = document.getElementById('success-alert');
-            if (successAlert) {
-                successAlert.style.display = 'none';
-            }
-        }, 2000);
-    </script>
+
+    @yield('js')
+<script>
+
+    let alerts = document.getElementsByClassName('alert');
+
+    setTimeout(function() {
+        for(let i = 0; i < alerts.length; i++) {
+            alerts[i].style.display = 'none';
+        }
+    }, 1500);
+
+
+</script>
+
 </body>
 </html>

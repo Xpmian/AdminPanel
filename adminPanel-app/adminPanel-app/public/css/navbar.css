@@ -33,8 +33,6 @@ body {
     overflow-y: scroll;
 }
 
-/* Profile Panel Styles */
-
 .profile-panel {
     display: flex;
     flex-direction: column;
@@ -52,6 +50,7 @@ body {
     background-color: transparent;
     border: none;
     list-style-type: none;
+    padding: 1.5rem 0;
 }
 
     .list-group-item a {
@@ -73,7 +72,7 @@ ul{
 }
 
 .list-group{
-    margin: 5rem 0;
+    margin: 3.5rem 0;
 }
 
 .dropdown-content {
@@ -97,3 +96,6 @@ ul{
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: #d9d9d9;}
+
+
+

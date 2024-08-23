@@ -10,6 +10,7 @@ class Product extends Model
 {
     use HasFactory,SoftDeletes;
     protected $guarded = ["id", "deleted_at","created_at", "updated_at"];
+    
 
     public function category()
     {

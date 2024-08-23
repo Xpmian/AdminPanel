@@ -24,14 +24,17 @@
     <div class="form-container">
         <form action="{{ route('register') }}" method="POST">
             @csrf
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Username" name="username">
+            <label>Kullanıcı Adı :</label>
+            <div class="input-group mb-3 mt-2">
+                <input type="text" class="form-control" placeholder="Kullanıcı Adı" name="username">
             </div>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="User Title" name="userTitle">
+            <label>Kullanıcı Title :</label>
+            <div class="input-group mb-3 mt-2">
+                <input type="text" class="form-control" placeholder="Kullanıcı Title" name="userTitle">
             </div>
-            <div class="input-group mb-3">
-                <input type="password" class="form-control" placeholder="Password" name="password">
+            <label>Şifre :</label>
+            <div class="input-group mb-3 mt-2">
+                <input type="password" class="form-control" placeholder="Şifre" name="password">
             </div>
             <button type="submit" class="btn btn-custom mt-3">Kaydet</button>
         </form>

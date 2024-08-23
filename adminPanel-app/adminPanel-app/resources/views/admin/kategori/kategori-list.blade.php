@@ -11,6 +11,11 @@
                 {{ session('success') }}
             </div>
         @endif
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+            @endif
         <div class="containerTotal">
 
             <div class="containerUp">
@@ -30,11 +35,11 @@
                                 <td>{{ $kategori->categoryTitle }}</td>
                                 <td>{{ $kategori->categoryDescription }}</td>
                                 @if ($kategori->status == 1)
-                                    <td>Aktif</td>
+                                <td style="color: green; font-weight: bold;">Aktif</td>
                                 @elseif ($kategori->status == 0)
-                                    <td>Pasif</td>
+                                <td style="color: red; font-weight: bold;">Pasif</td>
                                 @endif
-                                <td><a href="{{ route('show.edit_kategori', $kategori->id) }}" class="btn btn-warning btn-sm btn-custom">Düzenle</a>
+                                <td><a href="{{ route('show.edit_kategori', $kategori->slug) }}" class="btn btn-warning btn-sm btn-custom">Düzenle</a>
                                 <td><a href="{{ route('kategori_sil',$kategori->id) }}" class="btn btn-danger btn-sm btn-custom">Sil</a></td>
                             </tr>
                         @endforeach

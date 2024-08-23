@@ -6,8 +6,6 @@
 @endsection
 
 @section('content')
-    <h2 class="centered-title">Kategoriyi Düzenle</h2>
-
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -42,8 +40,8 @@
             <div class="form-block">
                 <div class="input-group mb-3 mt-2">
                     <select id="number-select" name="status" class="form-control">
-                        <option value="0" {{ $category->status == 0 ? 'selected' : '' }}>0</option>
-                        <option value="1" {{ $category->status == 1 ? 'selected' : '' }}>1</option>
+                        <option style="color: red; font-weight: bold;" value="0" {{ $category->status == 0 ? 'selected' : '' }}>Pasif</option>
+                        <option style="color: green; font-weight: bold;" value="1" {{ $category->status == 1 ? 'selected' : '' }}>Aktif</option>
                     </select>
                 </div>
             </div>
